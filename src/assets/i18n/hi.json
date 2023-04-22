@@ -1,5 +1,18 @@
 {
   "translation": {
-    "Next": "अगला"
+    "Next": "अगला",
+    "Smart Dairy": "स्मार्ट डेयरी",
+    "Dairy Owner": "डेयरी मालिक",
+    "Dairy User": "डेयरी उपयोगकर्ता",
+    "Register":"पंजीकरण करवाना",
+    "Your Name": "अप का नाम",
+    "Mobile Number" : "मोबाइल नंबर",
+    "Send OTP" : "ओटीपी भेजें",
+    "Phone Verification": "फ़ोन सत्यापन",
+    "OTP Verification" : "ओटीपी सत्यापन",
+    "Change Mobile Number": "मोबाइल नंबर बदलें",
+    "Verify Now" : "अभी सत्यापित करें",
+    "I didn't receive code" : "मुझे कोड नहीं मिला",
+    "Resend Code" : "पुन: कोड भेजे"
   }
 }

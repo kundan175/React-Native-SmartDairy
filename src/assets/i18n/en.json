@@ -1,5 +1,18 @@
 {
   "translation": {
-    "Next": "Next"
+    "Next": "Next",
+    "Smart Dairy": "Smart Dairy",
+    "Dairy Owner": "Dairy Owner",
+    "Dairy User": "Dairy User",
+    "Register":"Register",
+    "Your Name": "Your Name",
+    "Mobile Number" : "Mobile Number",
+    "Send OTP" : "Send OTP",
+    "Phone Verification": "Phone Verification",
+    "OTP Verification" : "OTP Verification",
+    "Change Mobile Number": "Change Mobile Number",
+    "Verify Now" : "Verify Now",
+    "I didn't receive code" : "I didn't receive code",
+    "Resend Code" : "Resend Code"
   }
 }

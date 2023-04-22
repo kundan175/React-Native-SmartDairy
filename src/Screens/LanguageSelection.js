@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
-    marginLeft: wp(4),
+    marginLeft: wp(4),fontWeight:'600',color:'#002047'
   },
   selectedTextStyle: {
     fontSize: 16,
-    marginLeft: wp(4),
+    marginLeft: wp(4),color:'#002047',fontWeight:'600'
   },
   iconStyle: {
     width: 20,
