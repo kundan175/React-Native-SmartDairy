@@ -63,7 +63,7 @@ const LanguageSelection = () => {
       >
         <SmartDairyButton
           title={"Next"}
-          buttonStyle={{ height: hp(8), width: wp(50) }}
+          buttonStyle={{ height: hp(8), width: wp(45) }}
           onPress={() => navigation.navigate("SelectUser")}
         />
       </View>

@@ -1,7 +1,7 @@
 import React, { useState, Component } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-
+import COLORS from '../config/Constant';
 
 export default class TextInputField extends Component {
 
@@ -34,7 +34,7 @@ export default class TextInputField extends Component {
             }}>
                 <Text style={{ fontSize: 18, color: 'black',marginLeft:wp(7),marginTop:wp(5),fontWeight:'600'  }}>{this.props.label}</Text>
                 <TextInput
-                    style={[{ alignSelf: 'center', height: hp(6), width: wp(90), paddingHorizontal: 10,  color: 'gray', borderColor: this.state.borderColor }, this.props.textInputStyle]}
+                    style={[{ alignSelf: 'center', height: hp(6), width: wp(90), paddingHorizontal: 10,  color: COLORS.black , borderColor: this.state.borderColor }, this.props.textInputStyle]}
 
                     editable={this.props.editable}
                     onChangeText={this.props.onChangeText}

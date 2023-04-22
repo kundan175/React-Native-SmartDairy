@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import SmartDairyButton from '../Components/SmartButton';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import CustomHeader from '../Components/CustomHeader';
@@ -19,12 +19,26 @@ const [userName , setUserName] = useState('')
 const [mobileNo, setMobileNo] = useState('')
 
 const OtpSendApi = () => {
+  let phoneRegex = /^[0-9]{10,13}$/;
+if(userName == ''){
+  Alert.alert('Please Enter Name')
+}else if(mobileNo == ''){
+  Alert.alert('Please Enter Mobile Number')
+}else if(phoneRegex.test(mobileNo) === false){
+  Alert.alert('Please Enter Valid Mobile Number')
+}
+
+else{
+
+
+
   Api.call(`http://saylussapidev.bancplus.in/api/CustomerRegisterSendOTP?Mobile=${mobileNo}&DeviceId=abc1234&Hash=1234`,'POST',null,true).then(res => {
     console.log('response ->',res)
     if(res){
       navigation.navigate('OtpVerification',{'mobileNumber' : mobileNo, 'name':userName})
     }
   })
+}
 }
 // const api = async() => {
 //   await fetch(`http://saylussapidev.bancplus.in/api/CustomerRegisterSendOTP?Mobile=${mobileNo}&DeviceId=abc1234&Hash=1234`,{
@@ -39,7 +53,13 @@ const OtpSendApi = () => {
 //     console.log('res',res)
 //   })
 // }
+// const changePlaceholderColor = (text) => {
+//   if(text.length ==0){
 
+//   }else{
+//     setPlaceholderColor('red')
+//   }
+// }
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <CustomHeader
@@ -55,9 +75,13 @@ const OtpSendApi = () => {
         returnKeyType="next"
         // blurOnSubmit={false}
         onChangeText={(value) => {
-          setUserName(value.trim())
+          setUserName(
+            // value.trim()
+            )
         }
         }
+        onFocus={() => setPlaceholderColor('red')}
+    
       />
    
       {/* <View style={styles.textField}> */}
