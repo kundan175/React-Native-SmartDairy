@@ -1,12 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+  languageSelect: "",
+};
 
 export const counterSlice = createSlice({
   name: "counter",
   initialState,
-  reducers: {},
+  reducers: {
+    updateLanguage: (state, action) => {
+      state.languageSelect = action.payload;
+    },
+  },
 });
 
-export const {} = counterSlice.actions;
+export const { updateLanguage } = counterSlice.actions;
 export default counterSlice.reducer;
