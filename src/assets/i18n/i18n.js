@@ -1,11 +1,10 @@
-import i18n from "i18next";
+import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 import en from "./en.json";
 import hi from "./hi.json";
 
-i18n.use(initReactI18next).init({
-  lng: global.language ? global.language : "en",
-  fallbackLng: global.language ? global.language : "en",
+i18next.use(initReactI18next).init({
+  lng: "en",
   resources: {
     en: en,
     hi: hi,
@@ -15,4 +14,4 @@ i18n.use(initReactI18next).init({
   },
 });
 
-export default i18n;
+export default i18next;

@@ -16,15 +16,15 @@ import { useNavigation } from "@react-navigation/native";
 import { Dropdown } from "react-native-element-dropdown";
 import COLORS from "../config/Constant";
 import { useTranslation } from "react-i18next";
-import "../assets/i18n/i18n";
+
 const LanguageSelection = () => {
+  const { t, i18n } = useTranslation();
   const navigation = useNavigation();
+
   const Data = [
     { label: "English", value: "en" },
     { label: "हिंदी", value: "hi" },
   ];
-  console.log(global.language ? global.language : "en");
-  const { t } = useTranslation();
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <CustomHeader title="Smart Dairy" />
@@ -43,7 +43,7 @@ const LanguageSelection = () => {
           //   onFocus={() => setIsFocus(true)}
           //   onBlur={() => setIsFocus(false)}
           onChange={(item) => {
-            global.language = item.value;
+            i18n.changeLanguage(item.value);
             // setValue(item.value);
             // setIsFocus(false);
           }}
@@ -62,8 +62,8 @@ const LanguageSelection = () => {
         }}
       >
         <SmartDairyButton
-          title={"Next"}
-          buttonStyle={{ height: hp(8), width: wp(45) }}
+          title={t("Next")}
+          buttonStyle={{ height: wp(14), width: wp(40) }}
           onPress={() => navigation.navigate("SelectUser")}
         />
       </View>
