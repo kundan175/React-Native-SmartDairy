@@ -36,3 +36,4 @@ com.smartdiary.app-packaged_res-34 /Users/kundan/Desktop/new target/smartDairy/n
 com.smartdiary.app-packaged_res-35 /Users/kundan/Desktop/new target/smartDairy/node_modules/react-native-device-info/android/build/intermediates/packaged_res/debug
 com.smartdiary.app-packaged_res-36 /Users/kundan/Desktop/new target/smartDairy/node_modules/react-native-safe-area-context/android/build/intermediates/packaged_res/debug
 com.smartdiary.app-packaged_res-37 /Users/kundan/Desktop/new target/smartDairy/node_modules/react-native-screens/android/build/intermediates/packaged_res/debug
+com.smartdiary.app-packaged_res-38 /Users/kundan/Desktop/new target/smartDairy/node_modules/react-native-splash-screen/android/build/intermediates/packaged_res/debug

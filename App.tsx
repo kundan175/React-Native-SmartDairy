@@ -8,9 +8,15 @@ import SelectUser from "./src/Screens/SelectUser";
 import RegisterUser from "./src/Screens/RegisterUser";
 import OtpVerification from "./src/Screens/OtpVerification";
 import CreateDairy from "./src/Screens/CreateDairy";
+import SplashScreen from "react-native-splash-screen";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 300);
+  });
 
   return (
     <View style={{ flex: 1 }}>
