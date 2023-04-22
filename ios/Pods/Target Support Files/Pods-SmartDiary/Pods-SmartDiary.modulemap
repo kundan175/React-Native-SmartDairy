@@ -1,0 +1,6 @@
+module Pods_SmartDiary {
+  umbrella header "Pods-SmartDiary-umbrella.h"
+
+  export *
+  module * { export * }
+}
