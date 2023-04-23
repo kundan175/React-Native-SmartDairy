@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   SafeAreaView,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import SmartDairyButton from "../Components/SmartButton";
 import {
@@ -20,6 +21,7 @@ import { useTranslation } from "react-i18next";
 const LanguageSelection = () => {
   const { t, i18n } = useTranslation();
   const navigation = useNavigation();
+  const [value, setValue] = useState();
 
   const Data = [
     { label: "English", value: "en" },
@@ -39,12 +41,12 @@ const LanguageSelection = () => {
           labelField="label"
           valueField="value"
           placeholder={"Select language"}
-          //   value={value}
+          value={value}
           //   onFocus={() => setIsFocus(true)}
           //   onBlur={() => setIsFocus(false)}
           onChange={(item) => {
             i18n.changeLanguage(item.value);
-            // setValue(item.value);
+            setValue(item.value);
             // setIsFocus(false);
           }}
         />
@@ -64,7 +66,14 @@ const LanguageSelection = () => {
         <SmartDairyButton
           title={t("Next")}
           buttonStyle={{ height: wp(14), width: wp(40) }}
-          onPress={() => navigation.navigate("SelectUser")}
+          onPress={() => {
+            if (!value) {
+              Alert.alert("Please select language");
+              return;
+            }
+
+            navigation.navigate("SelectUser");
+          }}
         />
       </View>
       {/* <TouchableOpacity style={{backgroundColor:'#002047',}}>
@@ -103,11 +112,15 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
-    marginLeft: wp(4),fontWeight:'600',color:'#002047'
+    marginLeft: wp(4),
+    fontWeight: "600",
+    color: "#002047",
   },
   selectedTextStyle: {
     fontSize: 16,
-    marginLeft: wp(4),color:'#002047',fontWeight:'600'
+    marginLeft: wp(4),
+    color: "#002047",
+    fontWeight: "600",
   },
   iconStyle: {
     width: 20,

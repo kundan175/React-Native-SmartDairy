@@ -4,15 +4,16 @@
     "Smart Dairy": "Smart Dairy",
     "Dairy Owner": "Dairy Owner",
     "Dairy User": "Dairy User",
-    "Register":"Register",
+    "Register": "Register",
     "Your Name": "Your Name",
-    "Mobile Number" : "Mobile Number",
-    "Send OTP" : "Send OTP",
+    "Mobile Number": "Mobile Number",
+    "Send OTP": "Send OTP",
     "Phone Verification": "Phone Verification",
-    "OTP Verification" : "OTP Verification",
+    "OTP Verification": "OTP Verification",
     "Change Mobile Number": "Change Mobile Number",
-    "Verify Now" : "Verify Now",
-    "I didn't receive code" : "I didn't receive code",
-    "Resend Code" : "Resend Code"
+    "Verify Now": "Verify Now",
+    "I didn't receive code": "I didn't receive code",
+    "Resend Code": "Resend Code",
+    "An authentication code has been sent to": "An authentication code has been sent to"
   }
 }

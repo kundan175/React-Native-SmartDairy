@@ -19,14 +19,14 @@ import TextInputField from "../Components/TextInputField";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DeviceInfo from "react-native-device-info";
 import Api from "../config/Api";
+import { useTranslation } from "react-i18next";
 
 const RegisterUser = () => {
   const navigation = useNavigation();
-
   const deviceId = DeviceInfo.getUniqueId();
-
   const [userName, setUserName] = useState("");
   const [mobileNo, setMobileNo] = useState("");
+  const { t, i18n } = useTranslation();
 
   const OtpSendApi = () => {
     let phoneRegex = /^[0-9]{10,13}$/;
@@ -82,7 +82,7 @@ const RegisterUser = () => {
       >
         <View style={styles.textField}>
           <TextInputField
-            placeHolder={"Your Name"}
+            placeHolder={t("Your Name")}
             value={userName}
             returnKeyType="next"
             // blurOnSubmit={false}
@@ -95,7 +95,7 @@ const RegisterUser = () => {
 
           {/* <View style={styles.textField}> */}
           <TextInputField
-            placeHolder={"Mobile Number"}
+            placeHolder={t("Mobile Number")}
             value={mobileNo}
             returnKeyType="next"
             keyboardType="numeric"
@@ -108,7 +108,7 @@ const RegisterUser = () => {
         </View>
         <View style={{ alignItems: "center", marginBottom: wp(10) }}>
           <SmartDairyButton
-            title="Send OTP"
+            title={t("Send OTP")}
             buttonStyle={{ height: wp(14) }}
             onPress={() => OtpSendApi()}
           />

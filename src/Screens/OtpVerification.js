@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   SafeAreaView,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
 } from "react-native";
 import SmartDairyButton from "../Components/SmartButton";
 import {
@@ -14,33 +13,34 @@ import {
 } from "react-native-responsive-screen";
 import CustomHeader from "../Components/CustomHeader";
 import { useNavigation } from "@react-navigation/native";
-import TextInputField from "../Components/TextInputField";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import COLORS from "../config/Constant";
-import {
-  CodeField,
-  useBlurOnFulfill,
-  useClearByFocusCell,
-  Cursor,
-} from "react-native-confirmation-code-field";
 import Api from "../config/Api";
+import { useTranslation } from "react-i18next";
+import OtpInputs from "react-native-otp-inputs";
 
 const OtpVerification = ({ route }) => {
   const userData = route.params;
   const navigation = useNavigation();
-  const CELL_COUNT = 6;
-
   const [value, setValue] = useState("");
-  console.log("sdf", userData?.mobileNumber);
-  const [verifiedEmail, setVerifiedEmail] = useState(false);
-  const [phoneVerified, setPhoneVerified] = useState(false);
-  const [confirmationCode, setConfirmationCode] = useState("");
-  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
-  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value,
-    setValue,
-  });
+  const { t, i18n } = useTranslation();
+  const [seconds, setSeconds] = useState(600);
 
+  useEffect(() => {
+    let interval = null;
+    if (seconds > 0) {
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [seconds]);
+  const pad = (num) => {
+    return num < 10 ? "0" + num : num;
+  };
+
+  const minutes = pad(Math.floor(seconds / 60));
+  const remainingSeconds = pad(seconds % 60);
   const ConfirmOtp = () => {
     Api.call(
       `http://saylussapidev.bancplus.in/api/CustomerRegisterConfirmOTP?Mobile=${userData?.mobileNumber}&DeviceId=abc1234&COtp=${value}&OTPId=22`,
@@ -52,65 +52,78 @@ const OtpVerification = ({ route }) => {
     });
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <CustomHeader title="Phone Verification" />
-      {/* <ScrollView contentContainerStyle={{flex:1,justifyContent:'space-around',}}> */}
-      <KeyboardAwareScrollView
-        contentContainerStyle={{ flex: 1, justifyContent: "space-between" }}
-      >
+      <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
         <View style={styles.container}>
-          <Text style={styles.headlineText}>OTP Verification</Text>
+          <Text style={styles.headlineText}>{t("OTP Verification")}</Text>
           <Text style={styles.text1}>
-            An authentication code has been sent to
+            {t("An authentication code has been sent to")}
           </Text>
-          <Text style={styles.text1}>(91) {userData?.mobileNumber}</Text>
+          <Text style={styles.phoneNumber}>{userData?.mobileNumber}</Text>
         </View>
-        <CodeField
-          ref={ref}
-          {...props}
-          value={value}
-          onChangeText={setValue}
-          cellCount={CELL_COUNT}
-          rootStyle={styles.codeFieldRoot}
-          keyboardType="number-pad"
-          textContentType="oneTimeCode"
-          renderCell={({ index, symbol, isFocused }) => (
-            <Text
-              key={index}
-              style={[styles.cell, isFocused && styles.focusCell]}
-              onLayout={getCellOnLayoutHandler(index)}
-            >
-              {symbol || (isFocused ? <Cursor /> : null)}
-            </Text>
-          )}
-        />
+        <View style={{ marginBottom: wp(5) }}>
+          <OtpInputs
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            cursorColor={COLORS.primary}
+            inputContainerStyles={{
+              backgroundColor: "#F4F5F7",
+              margin: wp(2),
+              borderRadius: 5,
+              alignSelf: "center",
+              alignItems: "center",
+              width: wp(12),
+              height: wp(12),
+              borderColor: COLORS.gray,
+              borderWidth: 0.6,
+            }}
+            inputStyles={{
+              textAlign: "center",
+              color: COLORS.black,
+              top: Platform.OS == "ios" ? 1 : 3,
+              padding: Platform.OS == "ios" ? 15 : 0,
+              fontSize: 25,
+            }}
+            handleChange={(code) => setValue(code)}
+            numberOfInputs={6}
+          />
+        </View>
         <View style={styles.container2}>
           <Text style={styles.text2}>
-            I didn't receive code.{" "}
-            <Text style={{ color: COLORS.blue, fontWeight: "700" }}>
-              Resend Code
+            {t("I didn't receive code")}.{" "}
+            <Text
+              onPress={() => {
+                setSeconds(600);
+              }}
+              style={{ color: COLORS.blue, fontWeight: "700" }}
+            >
+              {t("Resend Code")}
             </Text>
           </Text>
-          <Text style={styles.text3}>1:20 Sec left</Text>
+          <Text style={styles.text3}>
+            {`${minutes}:${remainingSeconds}`} left
+          </Text>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={{ marginTop: wp(5) }}
+            style={{ marginTop: wp(3), marginBottom: wp(5) }}
           >
-            <Text style={styles.changeNumText}>Change Mobile Number</Text>
+            <Text style={styles.changeNumText}>
+              {t("Change Mobile Number")}
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={{ alignItems: "center", marginBottom: wp(10) }}>
           <SmartDairyButton
-            title="Verify Now"
+            title={t("Verify Now")}
             buttonStyle={{ height: wp(14) }}
-            onPress={
-              () => ConfirmOtp()
-              // navigation.navigate('CreateDairy')
-            }
+            onPress={() => ConfirmOtp()}
           />
         </View>
       </KeyboardAwareScrollView>
-      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
@@ -119,19 +132,26 @@ export default OtpVerification;
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    marginTop: hp(10),
+    marginTop: hp(5),
+    marginBottom: wp(9),
   },
   headlineText: {
     fontWeight: "700",
     fontSize: 24,
+    color: COLORS.primary,
   },
   text1: {
     color: COLORS.gray,
     fontSize: 16,
     marginTop: wp(2),
   },
+  phoneNumber: {
+    color: COLORS.gray,
+    fontSize: 16,
+  },
   text2: {
     fontSize: 17,
+    color: COLORS.primary,
   },
   container2: {
     alignItems: "center",
@@ -145,24 +165,5 @@ const styles = StyleSheet.create({
     color: COLORS.blue,
     fontWeight: "600",
     fontSize: 16,
-  },
-  codeFieldRoot: {
-    color: "white",
-    justifyContent: "space-evenly",
-  },
-  cell: {
-    width: 50,
-    lineHeight: 55,
-    fontSize: 25,
-    borderWidth: 1,
-    borderColor: "white",
-    textAlign: "center",
-    backgroundColor: "#F4F5F7",
-    color: "black",
-    height: 60,
-    shadowOpacity: wp(0.1),
-    shadowOffset: { height: 1, width: 2 },
-    borderRadius: wp(2),
-    elevation: 6,
   },
 });
