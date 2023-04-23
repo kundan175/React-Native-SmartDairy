@@ -14,10 +14,10 @@ import {
 import CustomHeader from "../Components/CustomHeader";
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import COLORS from "../config/Constant";
 import Api from "../config/Api";
 import { useTranslation } from "react-i18next";
 import OtpInputs from "react-native-otp-inputs";
+import { COLORS } from "../config/Constant";
 
 const OtpVerification = ({ route }) => {
   const userData = route.params;

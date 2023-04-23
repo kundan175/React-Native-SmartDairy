@@ -15,13 +15,16 @@ import {
 import CustomHeader from "../Components/CustomHeader";
 import { useNavigation } from "@react-navigation/native";
 import { Dropdown } from "react-native-element-dropdown";
-import COLORS from "../config/Constant";
 import { useTranslation } from "react-i18next";
+import { COLORS } from "../config/Constant";
+import { useDispatch } from "react-redux";
+import { alertShowNow } from "../store/counterSlice";
 
 const LanguageSelection = () => {
   const { t, i18n } = useTranslation();
   const navigation = useNavigation();
   const [value, setValue] = useState();
+  const dispatch = useDispatch();
 
   const Data = [
     { label: "English", value: "en" },
@@ -68,10 +71,9 @@ const LanguageSelection = () => {
           buttonStyle={{ height: wp(14), width: wp(40) }}
           onPress={() => {
             if (!value) {
-              Alert.alert("Please select language");
+              dispatch(alertShowNow({ title: "Please select language" }));
               return;
             }
-
             navigation.navigate("SelectUser");
           }}
         />

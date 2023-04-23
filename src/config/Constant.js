@@ -1,4 +1,4 @@
-export default COLORS = {
+export const COLORS = {
   MainHeaderColor: "#002047",
   black: "#000000",
   white: "#FFFFFF",

@@ -4,7 +4,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import COLORS from "../config/Constant";
+import { COLORS } from "../config/Constant";
 
 export default class TextInputField extends Component {
   constructor(props) {

@@ -12,8 +12,8 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import COLORS from "../config/Constant";
 import { useTranslation } from "react-i18next";
+import { COLORS } from "../config/Constant";
 
 const SelectUser = () => {
   const navigation = useNavigation();
