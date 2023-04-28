@@ -32,13 +32,13 @@ export default class TextInputField extends Component {
     return (
       <View style={{}}>
         <Text
-          style={{
+          style={[{
             fontSize: 18,
             color: "black",
             marginLeft: wp(7),
             marginTop: wp(5),
             fontWeight: "600",
-          }}
+          },this.props.titleTextStyle]}
         >
           {this.props.label}
         </Text>
@@ -70,14 +70,14 @@ export default class TextInputField extends Component {
           maxLength={this.props.maxLength}
         />
         <View
-          style={{
+          style={[{
             alignSelf: "center",
             height: hp(0.1),
             width: wp(85),
             paddingHorizontal: 15,
             color: "gray",
             backgroundColor: "gray",
-          }}
+          }, this.props.underlinestyle,]}
         ></View>
       </View>
     );

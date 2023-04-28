@@ -1,5 +1,5 @@
 import react from "react";
-import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
+import { Text, TouchableOpacity, StyleSheet, View, Image } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -12,6 +12,7 @@ const SmartDairyButton = ({
   buttonColor,
   textStyle,
   textColor,
+  image
 }) => {
   return (
     <TouchableOpacity
@@ -22,6 +23,7 @@ const SmartDairyButton = ({
       }}
       onPress={onPress}
     >
+                <Image source={image} />
       <Text
         style={{
           ...styles.title,

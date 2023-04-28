@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 
 const CustomHeader = ({
   title,
@@ -7,6 +8,10 @@ const CustomHeader = ({
   textColor,
   textStyle,
   headerStyle,
+  image,
+  imageStyle,
+  onPress,
+  viewStyle
 }) => {
   return (
     <View
@@ -16,6 +21,9 @@ const CustomHeader = ({
         backgroundColor: headerColor || "#002047",
       }}
     >
+      <TouchableOpacity onPress={onPress}>
+       <Image source={image} style={{...imageStyle}}/>
+       </TouchableOpacity>
       <Text
         style={{
           ...styles.textStyle,
@@ -25,6 +33,7 @@ const CustomHeader = ({
       >
         {title}
       </Text>
+      <View style={{...viewStyle}}/>
     </View>
   );
 };

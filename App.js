@@ -12,6 +12,19 @@ import SplashScreen from "react-native-splash-screen";
 import CustomAlert from "./src/Components/CustomAlert";
 import { useDispatch, useSelector } from "react-redux";
 import { alertHideNow } from "./src/store/counterSlice";
+import LeftRightDrawer from "./src/Screens/LeftRightDrawer";
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import CustomDrawerContent from "./src/Components/CustomDrawer";
+import LeftDrawer from "./src/Screens/LeftDrawer";
+import Receipt from "./src/Screens/Receipt";
+import Payment from "./src/Screens/Payment";
+import Sales from "./src/Screens/Sales";
+import Purchase from "./src/Screens/Purchase";
+import CustomizePrice from "./src/Screens/CustomizePrice";
+import CreateParty from "./src/Screens/CreateParty";
+import EditDairy from "./src/Screens/EditDairy";
+import Party from "./src/Screens/Party";
+
 
 const App = () => {
   const alertShow = useSelector((state) => state.smartDairy.alertVisible);
@@ -31,7 +44,7 @@ const App = () => {
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
-            initialRouteName="LanguageSelection"
+            initialRouteName="LeftRightDrawer"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen
@@ -43,9 +56,23 @@ const App = () => {
             <Stack.Screen name="OtpVerification" component={OtpVerification} />
 
             <Stack.Screen name="CreateDairy" component={CreateDairy} />
+            <Stack.Screen name="LeftRightDrawer" component={LeftRightDrawer} />
+            <Stack.Screen name="MyDrawer" component={MyDrawer} />
+            <Stack.Screen name="Receipt" component={Receipt} />
+            <Stack.Screen name="Payment" component={Payment} />
+            <Stack.Screen name="Sales" component={Sales} />
+            <Stack.Screen name="LeftDrawer" component={LeftDrawer} />
+            <Stack.Screen name="Purchase" component={Purchase} />
+            <Stack.Screen name="CustomizePrice" component={CustomizePrice} />
+            <Stack.Screen name="CreateParty" component={CreateParty} />
+            <Stack.Screen name="EditDairy" component={EditDairy} />
+            <Stack.Screen name="Party" component={Party} />
+
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
+
+
 
       <CustomAlert
         visible={alertShow}
@@ -57,7 +84,35 @@ const App = () => {
         }}
       />
     </View>
+
+    
   );
 };
+function MyDrawer({navigation}) {
+const Drawer = createDrawerNavigator();
+
+return (
+  // <NavigationContainer ref={navigationRef}>
+  <Drawer.Navigator screenOptions={{ swipeEnabled: false, headerShown: false, tabBarStyle: { display: "none" } }} 
+    drawerContent={(props) =>
+      <CustomDrawerContent {...props} navigation={navigation}/>}>
+     <Drawer.Screen name="LeftRightDrawer" component={LeftRightDrawer} />
+    {/* <Drawer.Screen name="LeftDrawer" component={LeftDrawer} /> */}
+  </Drawer.Navigator>
+  // </NavigationContainer>
+);
+    }
+// const Drawer = createDrawerNavigator();
+
+// function MyDrawer() {
+//   return (
+//     <Drawer.Navigator>
+//       <Drawer.Screen name="CreateDairy" component={CreateDairy} />
+//       <Drawer.Screen name="OtpVerification" component={OtpVerification} />
+//     </Drawer.Navigator>
+//   );
+// }
+
+
 
 export default App;
