@@ -18,6 +18,7 @@ import Api from "../config/Api";
 import { useTranslation } from "react-i18next";
 import OtpInputs from "react-native-otp-inputs";
 import { COLORS } from "../config/Constant";
+import { Loader } from "../Components/Loader";
 
 const OtpVerification = ({ route }) => {
   const userData = route.params;
@@ -25,7 +26,9 @@ const OtpVerification = ({ route }) => {
   const [value, setValue] = useState("");
   const { t, i18n } = useTranslation();
   const [seconds, setSeconds] = useState(600);
+  const [isLoading, setIsLoading] = useState(false);
 
+console.log('value',value)
   useEffect(() => {
     let interval = null;
     if (seconds > 0) {
@@ -41,16 +44,86 @@ const OtpVerification = ({ route }) => {
 
   const minutes = pad(Math.floor(seconds / 60));
   const remainingSeconds = pad(seconds % 60);
+
+
   const ConfirmOtp = () => {
-    Api.call(
-      `/api/CustomerRegisterConfirmOTP?Mobile=${userData?.mobileNumber}&DeviceId=abc1234&COtp=${value}&OTPId=22`,
-      "POST",
-      null,
-      true
-    ).then((res) => {
-      console.log("ressss", res);
-    });
-  };
+    setIsLoading(true);
+  const formData = new FormData();
+  formData.append('ClientName', 'SmartDairy');
+  formData.append('sprocname', 'App_UserRegConfirmOTP');
+  formData.append('Deviceid', 'F1938310-23AD-4D23-A42B');
+  formData.append('JsonData', JSON.stringify({
+    OTPid: '01',
+    FirebaseToken:'12122rsdjwjwdwfef',
+    cOTP:value,
+  // cDeviceid: 'F1938310-23AD-4D23-A42B-F233CA9809E1',
+    // Parent: 1,
+}));
+      Api.call(
+        `/api/DataAdd`,
+        "POST",
+        formData,
+        true
+      )
+        .then((res) => {
+          console.log("response ->", res);
+          if (res) {
+            setIsLoading(false);
+          
+          }
+        })
+        .catch(() => {
+          setIsLoading(false);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    
+      }
+
+      const ResendOtp = () => {
+        setValue('')
+        const formData = new FormData();
+
+        formData.append('ClientName', 'SmartDairy');
+        formData.append('sprocname', 'App_UserRegister');
+        formData.append('Deviceid', 'F1938310-23AD-4D23-A42B');
+      
+        formData.append('JsonData', JSON.stringify({
+        cMobile: userData?.mobileNumber,
+        // cDeviceid: 'F1938310-23AD-4D23-A42B-F233CA9809E1',
+        Parent: 1,
+      }));
+            Api.call(
+              `/api/DataAdd`,
+              "POST",
+              formData,
+              true
+            )
+              .then((res) => {
+                console.log("response ->", res);
+                if (res) {
+                  setIsLoading(false);
+                }
+              })
+              .catch(() => {
+                setIsLoading(false);
+              })
+              .finally(() => {
+                setIsLoading(false);
+              });
+          }
+ 
+  // const ConfirmOtp = () => {
+  //   Api.call(
+  //     `/api/CustomerRegisterConfirmOTP?Mobile=${userData?.mobileNumber}&DeviceId=abc1234&COtp=${value}&OTPId=22`,
+  //     "POST",
+  //     null,
+  //     true
+  //   ).then((res) => {
+  //     console.log("ressss", res);
+  //   });
+  // };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <CustomHeader title="Phone Verification" />
@@ -98,6 +171,7 @@ const OtpVerification = ({ route }) => {
             <Text
               onPress={() => {
                 setSeconds(600);
+                ResendOtp()
               }}
               style={{ color: COLORS.blue, fontWeight: "700" }}
             >
@@ -124,6 +198,8 @@ const OtpVerification = ({ route }) => {
           />
         </View>
       </KeyboardAwareScrollView>
+      <Loader modalVisible={isLoading} />
+
     </SafeAreaView>
   );
 };

@@ -64,7 +64,7 @@ const App = () => {
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
-            initialRouteName="RightMenu"
+            initialRouteName="CreateDairy"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen

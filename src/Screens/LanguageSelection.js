@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,12 +19,47 @@ import { useTranslation } from "react-i18next";
 import { COLORS } from "../config/Constant";
 import { useDispatch } from "react-redux";
 import { alertShowNow } from "../store/counterSlice";
+import { Loader } from "../Components/Loader";
 
 const LanguageSelection = () => {
   const { t, i18n } = useTranslation();
   const navigation = useNavigation();
   const [value, setValue] = useState();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    checkdeviceId()
+  },[])
+
+const checkdeviceId = () => {
+  const formData = new FormData();
+  formData.append('ClientName', 'SmartDairy');
+  formData.append('sprocname', 'App_CheckDevice');
+  formData.append('Deviceid', 'F1938310-23AD-4D23-A42B');
+  formData.append('JsonData', JSON.stringify({
+    cDeviceid: 'F1938310-23AD-4D23-A42B',
+}));
+      Api.call(
+        `/api/DataAdd`,
+        "POST",
+        formData,
+        true
+      )
+        .then((res) => {
+          console.log("response ->", res);
+          if (res) {
+            setIsLoading(false);
+          }
+        })
+        .catch(() => {
+          setIsLoading(false);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+
 
   const Data = [
     { label: "English", value: "en" },
@@ -81,6 +116,8 @@ const LanguageSelection = () => {
       {/* <TouchableOpacity style={{backgroundColor:'#002047',}}>
 <Text>Next</Text>
             </TouchableOpacity> */}
+                  <Loader modalVisible={isLoading} />
+
     </SafeAreaView>
   );
 };

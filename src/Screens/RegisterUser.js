@@ -40,7 +40,7 @@ useEffect(() => {
 },[])
 const userDeviceId = async() => {
   var id = await AsyncStorage.getItem('deviceId')
-  // console.log('idd',id)
+  console.log('idd',id)
 }
   const OtpSendApi = () => {
     let phoneRegex = /^[0-9]{10,13}$/;
@@ -53,25 +53,27 @@ const userDeviceId = async() => {
     } else {
       setIsLoading(true);
     
-     let body=
-      JSON.stringify({
-        ClientName: 'SmartDairy',
-   sprocname: 'App_UserRegister',
-   JsonData:{"cMobile":"9517361074","cDeviceid":"F1938310-23AD-4D23-A42B-F233CA9809E1","Parent":1},
-      })
-//   const formData = new FormData();
+  //    let body=
+  //     JSON.stringify({
+  //       ClientName: 'SmartDairy',
+  //  sprocname: 'App_UserRegister',
+  //  JsonData:{"cMobile":"9517361074","cDeviceid":"F1938310-23AD-4D23-A42B-F233CA9809E1","Parent":1},
+  //     })
+  const formData = new FormData();
 
-//   formData.append('ClientName', 'SmartDairy');
-//   formData.append('sprocname', 'App_UserRegister');
-//   formData.append('JsonData', JSON.stringify({
-//   cMobile: '9517361074',
-//   cDeviceid: 'F1938310-23AD-4D23-A42B-F233CA9809E1',
-//   Parent: 1,
-// }));
+  formData.append('ClientName', 'SmartDairy');
+  formData.append('sprocname', 'App_UserRegister');
+  formData.append('Deviceid', 'F1938310-23AD-4D23-A42B');
+
+  formData.append('JsonData', JSON.stringify({
+  cMobile: mobileNo,
+  // cDeviceid: 'F1938310-23AD-4D23-A42B-F233CA9809E1',
+  Parent: 1,
+}));
       Api.call(
-        `/api/DataAdd?Deviceid='F1938310-23AD-4D23-A42B-F233CA9809E1'`,
+        `/api/DataAdd`,
         "POST",
-        body,
+        formData,
         true
       )
         .then((res) => {

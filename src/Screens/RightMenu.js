@@ -55,6 +55,7 @@ const RightMenu = () => {
     return(
       <View style={{ paddingVertical:wp(2)
     }}>
+        <View style={{backgroundColor:'#F5F5F5'}}>
         <View style={styles.listView}>
             <Image source={item?.image}/>
             <View style={{marginHorizontal:wp(3)}}>
@@ -62,7 +63,8 @@ const RightMenu = () => {
       <Text style={styles.listText}>{item?.location}</Text>
       </View>
       </View>
-      <View style={{width:wp(100),height:wp(0.2),backgroundColor:'#000000'}}/>
+      </View>
+      {/* <View style={{width:wp(100),height:wp(0.2),backgroundColor:'#000000'}}/> */}
 
       </View>
     )
@@ -74,38 +76,94 @@ const RightMenu = () => {
   return (
     <SafeAreaView style={{ flex: 1,backgroundColor:'white' }}>
       {/* <CustomHeader title="Smart Dairy" /> */}
-      <View style={{alignItems:'flex-end',paddingHorizontal:wp(4),marginBottom:wp(2)}}>
+      <View style={{alignItems:'flex-end',paddingHorizontal:wp(4),marginBottom:wp(4)}}>
         <Image source={require('../assets/icons/grayCross.png')}/>
       </View>
 <View style={styles.headerView}>
       <Image source = {require('../assets/icons/userProfile.png')} style={{height:wp(15),width:wp(15)}}/>
         <Text style={styles.headingText}>User Name</Text>
         <Text style={styles.subHeadiingText}>Owner</Text>
-
-
-   
 </View>
 
 
  
-<Text style={{paddingHorizontal:wp(5),marginTop:wp(5),marginBottom:wp(3),fontSize:17}}>
-    Select Dairy
-</Text>
-   <View style={{width:wp(100),height:wp(0.2),backgroundColor:'#000000'}}/>
-      <FlatList
-      data={DATA}
-      renderItem={renderItem}
-      />
-
-      <View style={{alignItems:'center',marginBottom:wp(10)}}>
-      <SmartDairyButton
-                title={t("Add Dairy")}
-                buttonStyle={{ height: wp(14), width: wp(45),borderRadius:wp(10),flexDirection:'row' }}
-            image = {require('../assets/icons/addDairy.png')}
-            textStyle={{marginHorizontal:wp(3)}}
-              />
+<View style={{marginTop:wp(10)}}>
+<View style={{ paddingVertical:wp(2)}}>
+        <View style={{backgroundColor:'#F5F5F5'}}>
+        <View style={styles.listView}>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
+        <Image source={require('../assets/icons/languageChange.png')}/>
+        <View style={{marginHorizontal:wp(3)}}>
+      <Text style={styles.listText}>Change Language</Text>
       </View>
-  
+      </View>
+      <Image source={require('../assets/icons/downArrow.png')}/>
+      </View>
+      </View>
+      </View>
+
+      <View style={{ paddingVertical:wp(2)}}>
+        <View style={{backgroundColor:'#F5F5F5'}}>
+        <View style={styles.listView}>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
+        <Image source={require('../assets/icons/addUserdark.png')}/>
+        <View style={{marginHorizontal:wp(3)}}>
+      <Text style={styles.listText}>Manage staff</Text>
+      </View>
+      </View>
+      <Image source={require('../assets/icons/rightArrow.png')}/>
+      </View>
+      </View>
+      </View>
+
+      <View style={{ paddingVertical:wp(2)}}>
+        <View style={{backgroundColor:'#F5F5F5'}}>
+        <View style={styles.listView}>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
+        <Image source={require('../assets/icons/Notification.png')}/>
+        <View style={{marginHorizontal:wp(3)}}>
+      <Text style={styles.listText}>Notifications</Text>
+      </View>
+      </View>
+      <Image source={require('../assets/icons/downArrow.png')}/>
+      </View>
+      </View>
+      </View>
+
+      <View style={{ paddingVertical:wp(2)}}>
+        <View style={{backgroundColor:'#F5F5F5'}}>
+        <View style={styles.listView}>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
+        <Image source={require('../assets/icons/subscription.png')}/>
+         <View style={{marginHorizontal:wp(3)}}>
+      <Text style={styles.listText}>Subscription</Text>
+      </View>
+      </View>
+      <Image source={require('../assets/icons/rightArrow.png')}/>
+      </View>
+      </View>
+      </View>
+
+      <View style={{ paddingVertical:wp(2)}}>
+        <View style={{backgroundColor:'#F5F5F5'}}>
+        <View style={styles.listView}>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
+        <Image source={require('../assets/icons/chatandSupport.png')}/>
+        <View style={{marginHorizontal:wp(3)}}>
+      <Text style={styles.listText}>Chat & Support</Text>
+      </View>
+      </View>
+      <Image source={require('../assets/icons/rightArrow.png')}/>
+      </View>
+      </View>
+      </View>
+</View>
+
+      <TouchableOpacity style={{flex:1,justifyContent:'flex-end'}}>
+        <View style={{backgroundColor:'#F5F5F5', alignItems:'center',paddingVertical:wp(3),marginBottom:wp(5)}}>
+      <Text style={{color:'red',fontSize:18,textAlign:'center'}}>Delete Account</Text>
+      </View>
+      </TouchableOpacity>
 
     </SafeAreaView>
   );
@@ -140,9 +198,9 @@ textinputView:{
     padding:wp(3),borderWidth:wp(0.2),marginTop:wp(5),marginHorizontal:wp(5),borderColor:'gray',flexDirection:'row',justifyContent:'space-between'
   },
   listText:{
-    marginHorizontal:wp(3),fontWeight:'600',fontSize:17
+    marginHorizontal:wp(3),fontWeight:'300',fontSize:18
   },
   listView:{
-    flexDirection:'row',alignItems:'center',marginHorizontal:wp(5),marginVertical:wp(4)
+    flexDirection:'row',alignItems:'center',marginHorizontal:wp(10),marginVertical:wp(4),justifyContent:'space-between'
   }
 });
