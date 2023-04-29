@@ -1,4 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { baseUrl } from "./Config";
+
 
 export default Api = {
   call: async function (
@@ -8,7 +10,7 @@ export default Api = {
     hastoken = true
   ) {
     var header = {};
-    var fullUrl = url;
+    var fullUrl =  baseUrl + url;
     var storedUserToken = await AsyncStorage.getItem("token");
     if (storedUserToken) {
       global.token = storedUserToken;

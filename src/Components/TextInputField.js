@@ -62,10 +62,10 @@ export default class TextInputField extends Component {
           onFocus={() => this.setState({ borderColor: "gray" })}
           autoCorrect={false}
           placeholderTextColor={"gray"}
-          ref={(input) => (this.textInput = input)}
+          // ref={(input) => (this.textInput = input)}
           returnKeyType={this.props.returnKeyType}
           blurOnSubmit={this.props.blurOnSubmit}
-          onSubmitEditing={this.onSubmitEditing.bind(this)}
+          // onSubmitEditing={this.onSubmitEditing.bind(this)}
           placeholder={this.props.placeHolder}
           maxLength={this.props.maxLength}
         />

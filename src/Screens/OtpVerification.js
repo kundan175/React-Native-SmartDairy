@@ -43,7 +43,7 @@ const OtpVerification = ({ route }) => {
   const remainingSeconds = pad(seconds % 60);
   const ConfirmOtp = () => {
     Api.call(
-      `http://saylussapidev.bancplus.in/api/CustomerRegisterConfirmOTP?Mobile=${userData?.mobileNumber}&DeviceId=abc1234&COtp=${value}&OTPId=22`,
+      `/api/CustomerRegisterConfirmOTP?Mobile=${userData?.mobileNumber}&DeviceId=abc1234&COtp=${value}&OTPId=22`,
       "POST",
       null,
       true

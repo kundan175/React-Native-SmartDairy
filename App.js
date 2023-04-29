@@ -24,12 +24,30 @@ import CustomizePrice from "./src/Screens/CustomizePrice";
 import CreateParty from "./src/Screens/CreateParty";
 import EditDairy from "./src/Screens/EditDairy";
 import Party from "./src/Screens/Party";
+import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const App = () => {
   const alertShow = useSelector((state) => state.smartDairy.alertVisible);
   const custom_title = useSelector((state) => state.smartDairy.alertTitle);
   const dispatch = useDispatch();
+
+
+  useEffect(()=> {
+    deviceId()
+  },[])
+
+  const deviceId = async() => {
+  var deviceUniqueId = await DeviceInfo.getUniqueId();
+  AsyncStorage.setItem("deviceId", deviceUniqueId);
+  console.log('ss',deviceUniqueId)
+
+}
+//   var deviceUniqueId = DeviceInfo.getUniqueId();
+// console.log('ss',deviceId)
+
+
 
   const Stack = createNativeStackNavigator();
   useEffect(() => {
@@ -44,7 +62,7 @@ const App = () => {
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
-            initialRouteName="LeftRightDrawer"
+            initialRouteName="LanguageSelection"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen

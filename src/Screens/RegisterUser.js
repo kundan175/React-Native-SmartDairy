@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -23,6 +23,7 @@ import { useTranslation } from "react-i18next";
 import { Loader } from "../Components/Loader";
 import { alertShowNow } from "../store/counterSlice";
 import { useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RegisterUser = () => {
   const navigation = useNavigation();
@@ -32,7 +33,15 @@ const RegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
+const [otpId, setOtpId] = useState('')
 
+useEffect(() => {
+  userDeviceId()
+},[])
+const userDeviceId = async() => {
+  var id = await AsyncStorage.getItem('deviceId')
+  // console.log('idd',id)
+}
   const OtpSendApi = () => {
     let phoneRegex = /^[0-9]{10,13}$/;
     if (userName == "") {
@@ -43,19 +52,28 @@ const RegisterUser = () => {
       dispatch(alertShowNow({ title: "Please Enter Valid Mobile Number" }));
     } else {
       setIsLoading(true);
+     let body=
+      JSON.stringify({
+        ClientName: 'SmartDairy',
+   sprocname: 'App_UserRegister',
+   JsonData:{"cMobile":"9517361074","cDeviceid":"F1938310-23AD-4D23-A42B-F233CA9809E1","Parent":1},
+      })
+      
       Api.call(
-        `http://saylussapidev.bancplus.in/api/CustomerRegisterSendOTP?Mobile=${mobileNo}&DeviceId=abc1234&Hash=1234`,
+        `/api/DataAdd`,
         "POST",
-        null,
+        body,
         true
       )
         .then((res) => {
           console.log("response ->", res);
           if (res) {
             setIsLoading(false);
+            setOtpId(res?.data?.id)
             navigation.navigate("OtpVerification", {
               mobileNumber: mobileNo,
               name: userName,
+              id:otpId
             });
           }
         })
