@@ -13,7 +13,7 @@ import CustomAlert from "./src/Components/CustomAlert";
 import { useDispatch, useSelector } from "react-redux";
 import { alertHideNow } from "./src/store/counterSlice";
 import LeftRightDrawer from "./src/Screens/LeftRightDrawer";
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import CustomDrawerContent from "./src/Components/CustomDrawer";
 import LeftDrawer from "./src/Screens/LeftDrawer";
 import Receipt from "./src/Screens/Receipt";
@@ -24,39 +24,26 @@ import CustomizePrice from "./src/Screens/CustomizePrice";
 import CreateParty from "./src/Screens/CreateParty";
 import EditDairy from "./src/Screens/EditDairy";
 import Party from "./src/Screens/Party";
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo from "react-native-device-info";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LeftMenu from "./src/Screens/LeftMenu";
 import RightMenu from "./src/Screens/RightMenu";
-
 
 const App = () => {
   const alertShow = useSelector((state) => state.smartDairy.alertVisible);
   const custom_title = useSelector((state) => state.smartDairy.alertTitle);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    deviceId();
+  }, []);
 
-  useEffect(()=> {
-    deviceId()
-  },[])
-
-  const deviceId = async() => {
-  var deviceUniqueId = await DeviceInfo.getUniqueId();
-  AsyncStorage.setItem("deviceId", deviceUniqueId);
-  console.log('ss',deviceUniqueId)
-
-}
-//   var deviceUniqueId = DeviceInfo.getUniqueId();
-// console.log('ss',deviceId)
-
-
+  const deviceId = async () => {
+    var deviceUniqueId = await DeviceInfo.getUniqueId();
+    global.deviceUniqueId = deviceUniqueId;
+  };
 
   const Stack = createNativeStackNavigator();
-  useEffect(() => {
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 300);
-  });
 
   return (
     <View style={{ flex: 1 }}>
@@ -64,7 +51,7 @@ const App = () => {
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
-            initialRouteName="CreateDairy"
+            initialRouteName="LanguageSelection"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen
@@ -74,7 +61,6 @@ const App = () => {
             <Stack.Screen name="SelectUser" component={SelectUser} />
             <Stack.Screen name="RegisterUser" component={RegisterUser} />
             <Stack.Screen name="OtpVerification" component={OtpVerification} />
-
             <Stack.Screen name="CreateDairy" component={CreateDairy} />
             <Stack.Screen name="LeftRightDrawer" component={LeftRightDrawer} />
             <Stack.Screen name="MyDrawer" component={MyDrawer} />
@@ -89,12 +75,9 @@ const App = () => {
             <Stack.Screen name="Party" component={Party} />
             <Stack.Screen name="LeftMenu" component={LeftMenu} />
             <Stack.Screen name="RightMenu" component={RightMenu} />
-
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
-
-
 
       <CustomAlert
         visible={alertShow}
@@ -106,24 +89,29 @@ const App = () => {
         }}
       />
     </View>
-
-    
   );
 };
-function MyDrawer({navigation}) {
-const Drawer = createDrawerNavigator();
+function MyDrawer({ navigation }) {
+  const Drawer = createDrawerNavigator();
 
-return (
-  // <NavigationContainer ref={navigationRef}>
-  <Drawer.Navigator screenOptions={{ swipeEnabled: false, headerShown: false, tabBarStyle: { display: "none" } }} 
-    drawerContent={(props) =>
-      <CustomDrawerContent {...props} navigation={navigation}/>}>
-     <Drawer.Screen name="LeftRightDrawer" component={LeftRightDrawer} />
-    {/* <Drawer.Screen name="LeftDrawer" component={LeftDrawer} /> */}
-  </Drawer.Navigator>
-  // </NavigationContainer>
-);
-    }
+  return (
+    // <NavigationContainer ref={navigationRef}>
+    <Drawer.Navigator
+      screenOptions={{
+        swipeEnabled: false,
+        headerShown: false,
+        tabBarStyle: { display: "none" },
+      }}
+      drawerContent={(props) => (
+        <CustomDrawerContent {...props} navigation={navigation} />
+      )}
+    >
+      <Drawer.Screen name="LeftRightDrawer" component={LeftRightDrawer} />
+      {/* <Drawer.Screen name="LeftDrawer" component={LeftDrawer} /> */}
+    </Drawer.Navigator>
+    // </NavigationContainer>
+  );
+}
 // const Drawer = createDrawerNavigator();
 
 // function MyDrawer() {
@@ -134,7 +122,5 @@ return (
 //     </Drawer.Navigator>
 //   );
 // }
-
-
 
 export default App;

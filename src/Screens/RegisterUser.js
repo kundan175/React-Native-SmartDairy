@@ -25,7 +25,8 @@ import { alertShowNow } from "../store/counterSlice";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const RegisterUser = () => {
+const RegisterUser = ({ route }) => {
+  const userType = route.params;
   const navigation = useNavigation();
   const deviceId = DeviceInfo.getUniqueId();
   const [userName, setUserName] = useState("");
@@ -33,58 +34,46 @@ const RegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-const [otpId, setOtpId] = useState('')
+  const [otpId, setOtpId] = useState("");
 
-useEffect(() => {
-  userDeviceId()
-},[])
-const userDeviceId = async() => {
-  var id = await AsyncStorage.getItem('deviceId')
-  console.log('idd',id)
-}
+  useEffect(() => {
+    userDeviceId();
+  }, []);
+  const userDeviceId = async () => {
+    var id = await AsyncStorage.getItem("deviceId");
+    console.log("idd", id);
+  };
   const OtpSendApi = () => {
     let phoneRegex = /^[0-9]{10,13}$/;
-    if (userName == "") {
-      dispatch(alertShowNow({ title: "Please Enter Name" }));
-    } else if (mobileNo == "") {
+    if (mobileNo == "") {
       dispatch(alertShowNow({ title: "Please Enter Mobile Number" }));
     } else if (phoneRegex.test(mobileNo) === false) {
       dispatch(alertShowNow({ title: "Please Enter Valid Mobile Number" }));
     } else {
       setIsLoading(true);
-    
-  //    let body=
-  //     JSON.stringify({
-  //       ClientName: 'SmartDairy',
-  //  sprocname: 'App_UserRegister',
-  //  JsonData:{"cMobile":"9517361074","cDeviceid":"F1938310-23AD-4D23-A42B-F233CA9809E1","Parent":1},
-  //     })
-  const formData = new FormData();
 
-  formData.append('ClientName', 'SmartDairy');
-  formData.append('sprocname', 'App_UserRegister');
-  formData.append('Deviceid', 'F1938310-23AD-4D23-A42B');
+      const formData = new FormData();
 
-  formData.append('JsonData', JSON.stringify({
-  cMobile: mobileNo,
-  // cDeviceid: 'F1938310-23AD-4D23-A42B-F233CA9809E1',
-  Parent: 1,
-}));
-      Api.call(
-        `/api/DataAdd`,
-        "POST",
-        formData,
-        true
-      )
+      formData.append("ClientName", "SmartDairy");
+      formData.append("sprocname", "App_UserRegister");
+      formData.append("Deviceid", global.deviceUniqueId);
+
+      formData.append(
+        "JsonData",
+        JSON.stringify({
+          cMobile: mobileNo,
+          Parent: userType,
+        })
+      );
+      Api.call(`/api/DataAdd`, "POST", formData, true)
         .then((res) => {
           console.log("response ->", res);
           if (res) {
             setIsLoading(false);
-            setOtpId(res?.data?.id)
             navigation.navigate("OtpVerification", {
               mobileNumber: mobileNo,
-              name: userName,
-              id:otpId
+              id: res.Data[0].OTPid,
+              userType: userType,
             });
           }
         })
@@ -103,18 +92,6 @@ const userDeviceId = async() => {
         contentContainerStyle={{ flex: 1, justifyContent: "space-around" }}
       >
         <View style={styles.textField}>
-          <TextInputField
-            placeHolder={t("Your Name")}
-            value={userName}
-            returnKeyType="next"
-            // blurOnSubmit={false}
-            onChangeText={(value) => {
-              setUserName(value);
-              // value.trim()
-            }}
-            onFocus={() => setPlaceholderColor("red")}
-          />
-
           <TextInputField
             placeHolder={t("Mobile Number")}
             value={mobileNo}

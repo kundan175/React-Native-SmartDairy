@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import SmartDairyButton from "../Components/SmartButton";
 import {
   heightPercentageToDP as hp,
@@ -19,6 +13,8 @@ import { useTranslation } from "react-i18next";
 const CreateDairy = () => {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
+
+  const onSave = () => {};
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -35,20 +31,20 @@ const CreateDairy = () => {
           label={"City"}
           placeHolder={"Type or choose your city"}
         />
-      </View>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "flex-end",
-          alignItems: "center",
-          marginBottom: hp(10),
-        }}
-      >
-        <SmartDairyButton
-          title="Save"
-          buttonStyle={{ height: hp(8), width: wp(50) }}
-          onPress={() => navigation.navigate("SelectUser")}
-        />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "flex-end",
+            alignItems: "center",
+            marginTop: wp(40),
+          }}
+        >
+          <SmartDairyButton
+            title="Save"
+            buttonStyle={{ height: wp(13), width: wp(40) }}
+            onPress={() => onSave()}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );

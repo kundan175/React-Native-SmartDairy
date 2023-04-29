@@ -11,7 +11,7 @@ const CustomHeader = ({
   image,
   imageStyle,
   onPress,
-  viewStyle
+  viewStyle,
 }) => {
   return (
     <View
@@ -22,8 +22,8 @@ const CustomHeader = ({
       }}
     >
       <TouchableOpacity onPress={onPress}>
-       <Image source={image} style={{...imageStyle}}/>
-       </TouchableOpacity>
+        <Image source={image} style={{ ...imageStyle }} />
+      </TouchableOpacity>
       <Text
         style={{
           ...styles.textStyle,
@@ -33,7 +33,7 @@ const CustomHeader = ({
       >
         {title}
       </Text>
-      <View style={{...viewStyle}}/>
+      <View style={{ ...viewStyle }} />
     </View>
   );
 };

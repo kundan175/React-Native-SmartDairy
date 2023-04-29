@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import SmartDairyButton from "../Components/SmartButton";
 import {
   heightPercentageToDP as hp,
@@ -19,55 +12,56 @@ import { useTranslation } from "react-i18next";
 import { COLORS } from "../config/Constant";
 import { useDispatch } from "react-redux";
 import { alertShowNow } from "../store/counterSlice";
-import { Loader } from "../Components/Loader";
+import SplashScreen from "react-native-splash-screen";
 
 const LanguageSelection = () => {
   const { t, i18n } = useTranslation();
   const navigation = useNavigation();
   const [value, setValue] = useState();
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    checkdeviceId()
-  },[])
-
-const checkdeviceId = () => {
-  const formData = new FormData();
-  formData.append('ClientName', 'SmartDairy');
-  formData.append('sprocname', 'App_CheckDevice');
-  formData.append('Deviceid', 'F1938310-23AD-4D23-A42B');
-  formData.append('JsonData', JSON.stringify({
-    cDeviceid: 'F1938310-23AD-4D23-A42B',
-}));
-      Api.call(
-        `/api/DataAdd`,
-        "POST",
-        formData,
-        true
-      )
-        .then((res) => {
-          console.log("response ->", res);
-          if (res) {
-            setIsLoading(false);
+    checkdeviceId();
+  }, []);
+  const checkdeviceId = () => {
+    const formData = new FormData();
+    formData.append("ClientName", "SmartDairy");
+    formData.append("sprocname", "App_CheckDevice");
+    formData.append("Deviceid", global.deviceUniqueId);
+    formData.append(
+      "JsonData",
+      JSON.stringify({
+        cDeviceid: global.deviceUniqueId,
+      })
+    );
+    Api.call(`/api/DataAdd`, "POST", formData, true)
+      .then((res) => {
+        if (res) {
+          SplashScreen.hide();
+          console.log(res.Data[0].Dairy);
+          if (res.Data[0].Dairy) {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "LeftRightDrawer" }],
+            });
           }
-        })
-        .catch(() => {
-          setIsLoading(false);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-
+        }
+      })
+      .catch(() => {
+        SplashScreen.hide();
+      })
+      .finally(() => {
+        SplashScreen.hide();
+      });
+  };
 
   const Data = [
     { label: "English", value: "en" },
     { label: "हिंदी", value: "hi" },
   ];
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="Smart Dairy" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <CustomHeader title="Select Language" />
       <View style={styles.container}>
         <Dropdown
           style={{ marginHorizontal: wp(0) }}
@@ -78,7 +72,7 @@ const checkdeviceId = () => {
           data={Data}
           labelField="label"
           valueField="value"
-          placeholder={"Select language"}
+          placeholder={"Select"}
           value={value}
           //   onFocus={() => setIsFocus(true)}
           //   onBlur={() => setIsFocus(false)}
@@ -116,8 +110,6 @@ const checkdeviceId = () => {
       {/* <TouchableOpacity style={{backgroundColor:'#002047',}}>
 <Text>Next</Text>
             </TouchableOpacity> */}
-                  <Loader modalVisible={isLoading} />
-
     </SafeAreaView>
   );
 };

@@ -23,12 +23,11 @@ import { Loader } from "../Components/Loader";
 const OtpVerification = ({ route }) => {
   const userData = route.params;
   const navigation = useNavigation();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState();
   const { t, i18n } = useTranslation();
   const [seconds, setSeconds] = useState(600);
   const [isLoading, setIsLoading] = useState(false);
-
-console.log('value',value)
+  const [otpId, setOtpId] = useState(userData.id);
   useEffect(() => {
     let interval = null;
     if (seconds > 0) {
@@ -38,6 +37,7 @@ console.log('value',value)
     }
     return () => clearInterval(interval);
   }, [seconds]);
+
   const pad = (num) => {
     return num < 10 ? "0" + num : num;
   };
@@ -45,85 +45,69 @@ console.log('value',value)
   const minutes = pad(Math.floor(seconds / 60));
   const remainingSeconds = pad(seconds % 60);
 
-
   const ConfirmOtp = () => {
     setIsLoading(true);
-  const formData = new FormData();
-  formData.append('ClientName', 'SmartDairy');
-  formData.append('sprocname', 'App_UserRegConfirmOTP');
-  formData.append('Deviceid', 'F1938310-23AD-4D23-A42B');
-  formData.append('JsonData', JSON.stringify({
-    OTPid: '01',
-    FirebaseToken:'12122rsdjwjwdwfef',
-    cOTP:value,
-  // cDeviceid: 'F1938310-23AD-4D23-A42B-F233CA9809E1',
-    // Parent: 1,
-}));
-      Api.call(
-        `/api/DataAdd`,
-        "POST",
-        formData,
-        true
-      )
-        .then((res) => {
-          console.log("response ->", res);
-          if (res) {
-            setIsLoading(false);
-          
-          }
-        })
-        .catch(() => {
+    const formData = new FormData();
+    formData.append("ClientName", "SmartDairy");
+    formData.append("sprocname", "App_UserRegConfirmOTP");
+    formData.append("Deviceid", global.deviceUniqueId);
+    formData.append(
+      "JsonData",
+      JSON.stringify({
+        OTPid: otpId,
+        FirebaseToken: "12122rsdjwjwdwfef",
+        cOTP: value,
+      })
+    );
+    Api.call(`/api/DataAdd`, "POST", formData, true)
+      .then((res) => {
+        console.log("response ->", res);
+        if (res) {
           setIsLoading(false);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    
-      }
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "CreateDairy" }],
+          });
+        }
+      })
+      .catch(() => {
+        setIsLoading(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
-      const ResendOtp = () => {
-        setValue('')
-        const formData = new FormData();
+  const ResendOtp = () => {
+    setValue();
+    const formData = new FormData();
+    formData.append("ClientName", "SmartDairy");
+    formData.append("sprocname", "App_UserRegister");
+    formData.append("Deviceid", global.deviceUniqueId);
 
-        formData.append('ClientName', 'SmartDairy');
-        formData.append('sprocname', 'App_UserRegister');
-        formData.append('Deviceid', 'F1938310-23AD-4D23-A42B');
-      
-        formData.append('JsonData', JSON.stringify({
+    formData.append(
+      "JsonData",
+      JSON.stringify({
         cMobile: userData?.mobileNumber,
-        // cDeviceid: 'F1938310-23AD-4D23-A42B-F233CA9809E1',
-        Parent: 1,
-      }));
-            Api.call(
-              `/api/DataAdd`,
-              "POST",
-              formData,
-              true
-            )
-              .then((res) => {
-                console.log("response ->", res);
-                if (res) {
-                  setIsLoading(false);
-                }
-              })
-              .catch(() => {
-                setIsLoading(false);
-              })
-              .finally(() => {
-                setIsLoading(false);
-              });
-          }
- 
-  // const ConfirmOtp = () => {
-  //   Api.call(
-  //     `/api/CustomerRegisterConfirmOTP?Mobile=${userData?.mobileNumber}&DeviceId=abc1234&COtp=${value}&OTPId=22`,
-  //     "POST",
-  //     null,
-  //     true
-  //   ).then((res) => {
-  //     console.log("ressss", res);
-  //   });
-  // };
+        Parent: userData?.userType?.userType,
+      })
+    );
+    Api.call(`/api/DataAdd`, "POST", formData, true)
+      .then((res) => {
+        console.log("response ->", res);
+        if (res) {
+          setOtpId(res.Data[0].OTPid);
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        setIsLoading(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <CustomHeader title="Phone Verification" />
@@ -171,7 +155,7 @@ console.log('value',value)
             <Text
               onPress={() => {
                 setSeconds(600);
-                ResendOtp()
+                ResendOtp();
               }}
               style={{ color: COLORS.blue, fontWeight: "700" }}
             >
@@ -199,7 +183,6 @@ console.log('value',value)
         </View>
       </KeyboardAwareScrollView>
       <Loader modalVisible={isLoading} />
-
     </SafeAreaView>
   );
 };

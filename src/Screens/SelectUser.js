@@ -32,13 +32,13 @@ const SelectUser = () => {
       >
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("RegisterUser")}
+            onPress={() => navigation.navigate("RegisterUser", { userType: 2 })}
             style={styles.userType}
           >
             <Text style={styles.userText}>{t("Dairy Owner")}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("RegisterUser")}
+            onPress={() => navigation.navigate("RegisterUser", { userType: 1 })}
             style={styles.userType}
           >
             <Text style={styles.userText}>{t("Dairy User")}</Text>
