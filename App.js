@@ -26,6 +26,8 @@ import EditDairy from "./src/Screens/EditDairy";
 import Party from "./src/Screens/Party";
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LeftMenu from "./src/Screens/LeftMenu";
+import RightMenu from "./src/Screens/RightMenu";
 
 
 const App = () => {
@@ -62,7 +64,7 @@ const App = () => {
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
-            initialRouteName="LanguageSelection"
+            initialRouteName="RightMenu"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen
@@ -85,6 +87,8 @@ const App = () => {
             <Stack.Screen name="CreateParty" component={CreateParty} />
             <Stack.Screen name="EditDairy" component={EditDairy} />
             <Stack.Screen name="Party" component={Party} />
+            <Stack.Screen name="LeftMenu" component={LeftMenu} />
+            <Stack.Screen name="RightMenu" component={RightMenu} />
 
           </Stack.Navigator>
         </NavigationContainer>

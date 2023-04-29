@@ -52,15 +52,24 @@ const userDeviceId = async() => {
       dispatch(alertShowNow({ title: "Please Enter Valid Mobile Number" }));
     } else {
       setIsLoading(true);
+    
      let body=
       JSON.stringify({
         ClientName: 'SmartDairy',
    sprocname: 'App_UserRegister',
    JsonData:{"cMobile":"9517361074","cDeviceid":"F1938310-23AD-4D23-A42B-F233CA9809E1","Parent":1},
       })
-      
+//   const formData = new FormData();
+
+//   formData.append('ClientName', 'SmartDairy');
+//   formData.append('sprocname', 'App_UserRegister');
+//   formData.append('JsonData', JSON.stringify({
+//   cMobile: '9517361074',
+//   cDeviceid: 'F1938310-23AD-4D23-A42B-F233CA9809E1',
+//   Parent: 1,
+// }));
       Api.call(
-        `/api/DataAdd`,
+        `/api/DataAdd?Deviceid='F1938310-23AD-4D23-A42B-F233CA9809E1'`,
         "POST",
         body,
         true
