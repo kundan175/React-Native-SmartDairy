@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -21,6 +21,8 @@ import { useDispatch } from "react-redux";
 import { alertShowNow } from "../store/counterSlice";
 import CustomDrawerContent from "../Components/CustomDrawer";
 import { DrawerActions } from '@react-navigation/native';
+import Api from "../config/Api";
+import { Loader } from "../Components/Loader";
 
 
 const LeftRightDrawer = () => {
@@ -28,7 +30,45 @@ const LeftRightDrawer = () => {
   const navigation = useNavigation();
   const [value, setValue] = useState();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+const [data, setData] = useState('')
+const [purchaseLedgerData, setPurchaseLedgerData] = useState('')
 
+  useEffect(() => {
+    HomescreenApiData()
+  },[])
+
+const HomescreenApiData = () => {
+  const formData = new FormData();
+  formData.append('ClientName', 'SmartDairy');
+  formData.append('sprocname', 'App_GetDashboard');
+  formData.append('DeviceID', 'qwert1234');
+  formData.append('JsonData', JSON.stringify({
+    nDairyid: '6',
+    nUserid:'1'
+    
+}));
+      Api.call(
+        `/api/DataAdd`,
+        "POST",
+        formData,
+        true
+      )
+        .then((res) => {
+          console.log("response ->", res?.Data[0]?.PurchaseLedger);
+          if (res) {
+            setData(res?.Data)
+            setPurchaseLedgerData(res?.Data[0]?.PurchaseLedger)
+            setIsLoading(false);
+          }
+        })
+        .catch(() => {
+          setIsLoading(false);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
 
   const DATA = [
     {
@@ -49,7 +89,19 @@ const LeftRightDrawer = () => {
     return(
       <View style={{ paddingVertical:wp(2)
     }}>
-      <Text style={{marginVertical:wp(4),marginHorizontal:wp(3)}}>{item?.price}</Text>
+      <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:wp(5)}}>
+        {/* <View style={{flexDirection:'row'}}>
+        <Text style={{marginVertical:wp(4),fontWeight:'600'}}>Dairy Name:</Text> */}
+
+            <Text style={{marginVertical:wp(4),marginHorizontal:wp(3),fontWeight:'600'}}>{item?.cPartynm}</Text>
+        {/* </View> */}
+<View style={{flexDirection:'row'}}>
+<Text style={{marginVertical:wp(4),marginHorizontal:wp(1),fontWeight:'600'}}>Amount :-</Text>
+
+      <Text style={{marginVertical:wp(4),marginHorizontal:wp(2),fontWeight:'400'}}>{item?.Amt}.0</Text>
+      {/* <Text style={{marginVertical:wp(4),marginHorizontal:wp(3)}}></Text> */}
+      </View>
+      </View>
       <View style={{width:wp(100),height:wp(0.2),backgroundColor:'#000000'}}/>
 
       </View>
@@ -76,6 +128,9 @@ const LeftRightDrawer = () => {
     </TouchableOpacity>
 </View>
 <View style={styles.boxDataView}>
+{/* {data?.Data.map((value) => {
+  // console.log('value---->>>',value)
+})} */}
 <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:wp(3)}}>
   <Text style={styles.textBox}>Purchase</Text> 
   <Text style={styles.textBox}>Sales</Text>
@@ -118,7 +173,7 @@ const LeftRightDrawer = () => {
    </View>
    <View style={{width:wp(100),height:wp(0.2),backgroundColor:'#000000'}}/>
       <FlatList
-      data={DATA}
+      data={purchaseLedgerData}
       renderItem={renderItem}
       />
 
@@ -148,6 +203,8 @@ const LeftRightDrawer = () => {
       <Text style={styles.bottomText}>Purchase</Text>
       </TouchableOpacity>
       </View>
+      <Loader modalVisible={isLoading} />
+
     </SafeAreaView>
   );
 };
