@@ -29,7 +29,7 @@ const Receipt = () => {
   const navigation = useNavigation();
   const [value, setValue] = useState();
   const dispatch = useDispatch();
-
+const [index, setIndex] = useState(0)
 
 
 
@@ -76,7 +76,7 @@ const Receipt = () => {
           </TouchableOpacity>
   <SmartDairyButton
                 title={t("Add  +")}
-                buttonStyle={{ height: wp(14), width: wp(32),borderTopLeftRadius:wp(2),borderBottomLeftRadius:wp(2)}}
+                buttonStyle={{ height: wp(14), width: wp(25),borderTopLeftRadius:wp(2),borderBottomLeftRadius:wp(2)}}
             // image = {require('../assets/icons/addUser.png')}
             textStyle={{marginRight:wp(3)}}
               />          
@@ -136,30 +136,35 @@ const Receipt = () => {
 <View style={{flexDirection:'row',marginHorizontal:wp(5),justifyContent:'space-evenly',marginTop:wp(5)}}>
 <SmartDairyButton
                 title={t("Cash")}
-                buttonStyle={{ height: wp(14), width: wp(40),borderRadius:wp(2),flexDirection:'row' }}
+                buttonColor= { index == 0 ? '#002047':'white'}
+                textColor={ index == 0 ? 'white' :'black'}
+                onPress={() => setIndex(0)}
+                buttonStyle={{ height: wp(14), width: wp(40),borderRadius:wp(2),flexDirection:'row',borderWidth:wp(0.2)  }}
               />
                <SmartDairyButton
                 title={t("Bank")}
-                buttonColor='white'
+                buttonColor= { index == 1 ? '#002047':'white'}
                 buttonStyle={{ height: wp(14), width: wp(40),borderRadius:wp(2),flexDirection:'row',borderWidth:wp(0.2) }}
-                textColor= 'black'
-              />
-</View>
-<View>
-<TextInputField label={"Amount"}
-titleTextStyle={{marginTop:wp(7)}}
- textInputStyle={{height:wp(8)}} /> 
-<TextInputField label={"Remark"} 
-titleTextStyle={{marginTop:wp(7)}}
+                textColor={ index == 1 ? 'white' :'black'}
+                onPress={() => setIndex(1)}
 
-textInputStyle={{height:wp(8)}} />   
-</View>
-<View style={{justifyContent:'flex-end',flex:1,marginBottom:wp(2)}}>
-<SmartDairyButton
-                title={t("Save")}
-                buttonStyle={{ height: wp(16), width: wp(100) }}
-              />
-</View>
+                          />
+            </View>
+            <View>
+            <TextInputField label={"Amount"}
+            titleTextStyle={{marginTop:wp(7)}}
+            textInputStyle={{height:wp(8)}} /> 
+            <TextInputField label={"Remark"} 
+            titleTextStyle={{marginTop:wp(7)}}
+
+            textInputStyle={{height:wp(8)}} />   
+            </View>
+            <View style={{justifyContent:'flex-end',flex:1,marginBottom:wp(2)}}>
+            <SmartDairyButton
+                            title={t("Save")}
+                            buttonStyle={{ height: wp(16), width: wp(100) }}
+                          />
+            </View>
     </SafeAreaView>
   );
 };

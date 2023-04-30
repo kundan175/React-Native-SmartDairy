@@ -177,7 +177,7 @@ const HomescreenApiData = () => {
       renderItem={renderItem}
       />
 
-      <View style={{alignItems:'flex-end',marginBottom:hp(10),marginRight:wp(5)}}>
+      <View style={{alignItems:'flex-end',marginBottom:hp(8),marginRight:wp(5)}}>
       <SmartDairyButton
                 title={t("Add Party")}
                 buttonStyle={{ height: wp(14), width: wp(40),borderRadius:wp(10),flexDirection:'row' }}
@@ -188,19 +188,19 @@ const HomescreenApiData = () => {
       <View style={styles.bottomTabView}> 
       <TouchableOpacity onPress={() => navigation.navigate('Receipt')} style={styles.bottomView}>
       <Image source = {require('../assets/icons/receipt.png')}/>
-      <Text style={styles.bottomText}>Receipt</Text>
+      <Text style={styles.bottomText}>{t('Receipt')}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Payment')} style={styles.bottomView}>
       <Image source = {require('../assets/icons/payment.png')}/>
-      <Text style={styles.bottomText}>payment</Text>
+      <Text style={styles.bottomText}>{t('payment')}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Sales')} style={styles.bottomView}>
       <Image source = {require('../assets/icons/sales.png')}/>
-      <Text style={styles.bottomText}>Sale</Text>
+      <Text style={styles.bottomText}>{t('Sale')}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Purchase')} style={styles.bottomView}>
       <Image source = {require('../assets/icons/purchase.png')}/>
-      <Text style={styles.bottomText}>Purchase</Text>
+      <Text style={styles.bottomText}>{t('Purchase')}</Text>
       </TouchableOpacity>
       </View>
       <Loader modalVisible={isLoading} />

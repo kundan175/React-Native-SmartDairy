@@ -63,7 +63,7 @@ const Sales = () => {
   <SmartDairyButton
                 title={t("Add  +")}
                 
-                buttonStyle={{ height: wp(14), width: wp(32),borderTopLeftRadius:wp(2),borderBottomLeftRadius:wp(2)}}
+                buttonStyle={{ height: wp(14), width: wp(25),borderTopLeftRadius:wp(2),borderBottomLeftRadius:wp(2)}}
             // image = {require('../assets/icons/addUser.png')}
             textStyle={{marginRight:wp(3)}}
               />          
@@ -186,7 +186,7 @@ textInputStyle={{height:wp(8)}} />
   <SmartDairyButton
                 title={t("Add  +")}
                 
-                buttonStyle={{ height: wp(14), width: wp(32),borderTopLeftRadius:wp(2),borderBottomLeftRadius:wp(2)}}
+                buttonStyle={{ height: wp(14), width: wp(25),borderTopLeftRadius:wp(2),borderBottomLeftRadius:wp(2)}}
             // image = {require('../assets/icons/addUser.png')}
             textStyle={{marginRight:wp(3)}}
               />          

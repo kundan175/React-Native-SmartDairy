@@ -69,7 +69,7 @@ const EditDairy = () => {
         }}
       >
         <SmartDairyButton
-          title="Save"
+          title={t("Save")}
           buttonStyle={{ height: hp(6), width: wp(40) }}
           onPress={() => navigation.navigate("SelectUser")}
         />

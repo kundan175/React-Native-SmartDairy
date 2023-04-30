@@ -14,6 +14,18 @@
     "Verify Now": "अभी सत्यापित करें",
     "I didn't receive code": "मुझे कोड नहीं मिला",
     "Resend Code": "पुन: कोड भेजे",
-    "An authentication code has been sent to": "एक प्रमाणीकरण कोड को भेजा गया है"
+    "An authentication code has been sent to": "एक प्रमाणीकरण कोड को भेजा गया है",
+    "Save":"बचाना",
+    "Name of Dairy":"डेयरी का नाम",
+    "Dairy Name":"डेयरी का नाम",
+    "Mobile No.":"मोबाइल नंबर",
+    "State":"राज्य",
+    "City":"शहर",
+    "Type or choose your city":"अपना शहर टाइप करें या चुनें",
+    "Type or choose your state":"अपना राज्य टाइप करें या चुनें",
+    "Receipt":"रसीद",
+    "payment":"भुगतान",
+    "Sale":"बिक्री",
+    "Purchase":"खरीदना"
   }
 }

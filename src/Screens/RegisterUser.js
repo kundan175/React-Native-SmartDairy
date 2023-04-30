@@ -24,6 +24,7 @@ import { Loader } from "../Components/Loader";
 import { alertShowNow } from "../store/counterSlice";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { COLORS } from "../config/Constant";
 
 const RegisterUser = ({ route }) => {
   const userType = route.params;
@@ -86,7 +87,7 @@ const RegisterUser = ({ route }) => {
     }
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1,backgroundColor:COLORS.white }}>
       <CustomHeader title="Register" />
       <KeyboardAwareScrollView
         contentContainerStyle={{ flex: 1, justifyContent: "space-around" }}

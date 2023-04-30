@@ -19,6 +19,8 @@ import { useTranslation } from "react-i18next";
 import OtpInputs from "react-native-otp-inputs";
 import { COLORS } from "../config/Constant";
 import { Loader } from "../Components/Loader";
+import { useDispatch } from "react-redux";
+import { alertShowNow } from "../store/counterSlice";
 
 const OtpVerification = ({ route }) => {
   const userData = route.params;
@@ -28,6 +30,8 @@ const OtpVerification = ({ route }) => {
   const [seconds, setSeconds] = useState(600);
   const [isLoading, setIsLoading] = useState(false);
   const [otpId, setOtpId] = useState(userData.id);
+const dispatch = useDispatch()
+
   useEffect(() => {
     let interval = null;
     if (seconds > 0) {
@@ -46,6 +50,10 @@ const OtpVerification = ({ route }) => {
   const remainingSeconds = pad(seconds % 60);
 
   const ConfirmOtp = () => {
+    if(value == ''){
+      dispatch(alertShowNow({ title: "Please Enter Otp" }));
+
+    }else{
     setIsLoading(true);
     const formData = new FormData();
     formData.append("ClientName", "SmartDairy");
@@ -76,7 +84,7 @@ const OtpVerification = ({ route }) => {
       .finally(() => {
         setIsLoading(false);
       });
-  };
+  };}
 
   const ResendOtp = () => {
     setValue();

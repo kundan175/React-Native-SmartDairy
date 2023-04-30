@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet, TextInput, Text } from "react-native";
 import SmartDairyButton from "../Components/SmartButton";
 import {
   heightPercentageToDP as hp,
@@ -11,6 +11,8 @@ import TextInputField from "../Components/TextInputField";
 import { useTranslation } from "react-i18next";
 import { Loader } from "../Components/Loader";
 import { Dropdown } from "react-native-element-dropdown";
+import { useDispatch } from "react-redux";
+import { alertShowNow } from "../store/counterSlice";
 
 const CreateDairy = () => {
   const navigation = useNavigation();
@@ -22,12 +24,67 @@ const [city, setCity] = useState('')
 const [isLoading, setIsLoading] = useState(false);
 const [stateCity, setStateCity] = useState([])
 const [selectedOption, setSelectedOption] = useState(null);
-
+const dispatch = useDispatch()
 console.log('stateCity--------',stateCity)
 
 useEffect(() => {
   getStateCIty()
 },[])
+
+// useEffect(() => {
+//   createDiary()
+// },[])
+
+const createDiary = () => {
+  let phoneRegex = /^[0-9]{10,13}$/;
+
+  if(dairyName == ''){
+    dispatch(alertShowNow({ title: "Please Enter Dairy Name" }));
+  }else if (mobileNo == "") {
+    dispatch(alertShowNow({ title: "Please Enter Mobile Number" }));
+  } else if (phoneRegex.test(mobileNo) === false) {
+    dispatch(alertShowNow({ title: "Please Enter Valid Mobile Number" }));
+  } else if (state === '') {
+    dispatch(alertShowNow({ title: "Please Enter State" }));
+  } else if (city == '') {
+    dispatch(alertShowNow({ title: "Please Enter City" }));
+  } 
+  else {
+    setIsLoading(true);
+
+const formData = new FormData();
+formData.append('ClientName', 'SmartDairy');
+formData.append('sprocname', 'App_AddDairy');
+formData.append('DeviceID', 'qwert1234');
+formData.append('JsonData', JSON.stringify({
+  cDairynm: dairyName,
+  cMobile: mobileNo,
+  nState:'2',
+  nCity:'3',
+  nUserid:'1',
+  nDairyid:'1'
+  
+}));
+    Api.call(
+      `/api/DataAdd`,
+      "POST",
+      formData,
+      true
+    )
+      .then((res) => {
+        console.log("response ->", res);
+        if (res) {
+         navigation.navigate('LeftRightDrawer')
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        setIsLoading(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }}
 
 const getStateCIty = () => {
 const formData = new FormData();
@@ -60,14 +117,14 @@ formData.append('JsonData', JSON.stringify({
       });
   }
 
-  const onSave = () => {};
+  // const onSave = () => {};
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <CustomHeader title="Create Diary" />
       <View style={styles.container}></View>
       <View style={{marginTop:wp(6)}}>
-        <TextInputField label={"Name of Dairy"} placeHolder={"Dairy Name "}
+        <TextInputField label={t("Name of Dairy")} placeHolder={t("Dairy Name")}
                 textInputStyle={styles.textInputPlaceholderStyle}
                 value={dairyName}
                 returnKeyType="next"
@@ -75,15 +132,16 @@ formData.append('JsonData', JSON.stringify({
                   setDiaryName(value.trim());
                 }}
                 />
-        <TextInputField label={"Mobile No."} placeHolder={"Mobile Number"}
+        <TextInputField label={t("Mobile No.")} placeHolder={t("Mobile Number")}
                 textInputStyle={styles.textInputPlaceholderStyle}
                 value={mobileNo}
                 returnKeyType="next"
+                maxLength={10}
                 onChangeText={(value) => {
                   setMobileNo(value.trim());
                 }}
                 />
-        <TextInputField
+        {/* <TextInputField
           label={"State"}
           placeHolder={"Type or choose your state"}
           textInputStyle={styles.textInputPlaceholderStyle}
@@ -93,8 +151,74 @@ formData.append('JsonData', JSON.stringify({
             setState(value.trim());
           }}
 
-        />
+        /> */}
+        <View>
+          <Text style={{fontWeight:'600', fontSize: 18,
+            color: "black",
+            marginLeft: wp(7),
+            marginTop: wp(5),
+            fontWeight: "600",}}>{t('State')}</Text>
+          <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:wp(5),marginLeft:wp(8)}}>
+          <TextInput
+          placeholder={t("Type or choose your state")}
+          placeholderTextColor={'gray'}
+          style={{width:wp(50)}}
+          value={state}
+          onChangeText={(value) => {
+            setState(value.trim());
+          }}
+          />
+ 
                 <Dropdown
+          style={{ marginHorizontal: wp(0) }}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={stateCity}
+          labelField="Code"
+          valueField="Code"
+          placeholder={""}
+          value={selectedOption}
+          onChange={(data) => {
+            setSelectedOption(data.value);
+          }}
+      
+
+
+          // value={value}
+          // //   onFocus={() => setIsFocus(true)}
+          // //   onBlur={() => setIsFocus(false)}
+          // onChange={(item) => {
+          //   i18n.changeLanguage(item.value);
+          //   setValue(item.value);
+          //   // setIsFocus(false);
+          // }}
+        />
+        </View>
+        <View
+          style={{
+            alignSelf: "center",
+            height: hp(0.1),
+            width: wp(86),
+            paddingHorizontal: 15,
+            color: "gray",
+            backgroundColor: "gray",
+          }}
+        ></View>
+               </View>
+        <TextInputField
+          label={t("City")}
+          placeHolder={t("Type or choose your city")}
+          textInputStyle={styles.textInputPlaceholderStyle}
+          value={city}
+          returnKeyType="next"
+          onChangeText={(value) => {
+            setCity(value.trim());
+          }}
+
+        />
+         {/* <Dropdown
           style={{ marginHorizontal: wp(0) }}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
@@ -119,44 +243,7 @@ formData.append('JsonData', JSON.stringify({
           //   setValue(item.value);
           //   // setIsFocus(false);
           // }}
-        />
-        <TextInputField
-          label={"City"}
-          placeHolder={"Type or choose your city"}
-          textInputStyle={styles.textInputPlaceholderStyle}
-          value={city}
-          returnKeyType="next"
-          onChangeText={(value) => {
-            setCity(value.trim());
-          }}
-
-        />
-         <Dropdown
-          style={{ marginHorizontal: wp(0) }}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={stateCity}
-          labelField="Code"
-          valueField="Code"
-          placeholder={"Select"}
-          value={selectedOption}
-          onChange={(data) => {
-            setSelectedOption(data.value);
-          }}
-      
-
-
-          // value={value}
-          // //   onFocus={() => setIsFocus(true)}
-          // //   onBlur={() => setIsFocus(false)}
-          // onChange={(item) => {
-          //   i18n.changeLanguage(item.value);
-          //   setValue(item.value);
-          //   // setIsFocus(false);
-          // }}
-        />
+        /> */}
         <View
           style={{
             flex: 1,
@@ -166,9 +253,9 @@ formData.append('JsonData', JSON.stringify({
           }}
         >
           <SmartDairyButton
-            title="Save"
+            title={t("Save")}
             buttonStyle={{ height: wp(13), width: wp(40) }}
-            onPress={() => onSave()}
+            onPress={() => createDiary()}
           />
         </View>
       </View>

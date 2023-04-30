@@ -25,6 +25,8 @@ const Payment = () => {
   const { t, i18n } = useTranslation();
 
 const navigation = useNavigation()
+const [index, setIndex] = useState(0)
+
   return (
     <SafeAreaView style={{ flex: 1,backgroundColor:COLORS.white }}>
       {/* <CustomHeader title="Smart Dairy" /> */}
@@ -67,7 +69,7 @@ const navigation = useNavigation()
   <SmartDairyButton
                 title={t("Add  +")}
                 
-                buttonStyle={{ height: wp(14), width: wp(32),borderTopLeftRadius:wp(2),borderBottomLeftRadius:wp(2)}}
+                buttonStyle={{ height: wp(14), width: wp(25),borderTopLeftRadius:wp(2),borderBottomLeftRadius:wp(2)}}
             // image = {require('../assets/icons/addUser.png')}
             textStyle={{marginRight:wp(3)}}
               />          
@@ -127,13 +129,17 @@ const navigation = useNavigation()
 <View style={{flexDirection:'row',marginHorizontal:wp(5),justifyContent:'space-evenly',marginTop:wp(5)}}>
 <SmartDairyButton
                 title={t("Cash")}
-                buttonStyle={{ height: wp(14), width: wp(40),borderRadius:wp(2),flexDirection:'row' }}
+                buttonColor= { index == 0 ? '#002047':'white'}
+                textColor={ index == 0 ? 'white' :'black'}
+                onPress={() => setIndex(0)}
+                buttonStyle={{ height: wp(14), width: wp(40),borderRadius:wp(2),flexDirection:'row' ,borderWidth:wp(0.2) }}
               />
                <SmartDairyButton
                 title={t("Bank")}
-                buttonColor='white'
+                buttonColor={index == 1 ? '#002047':'white'}
                 buttonStyle={{ height: wp(14), width: wp(40),borderRadius:wp(2),flexDirection:'row',borderWidth:wp(0.2) }}
-                textColor= 'black'
+                textColor={ index == 1 ? 'white' :'black'}
+                onPress={() => setIndex(1)}
               />
 </View>
 <View>
