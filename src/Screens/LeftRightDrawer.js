@@ -118,9 +118,12 @@ const HomescreenApiData = () => {
 <View style={styles.headerView}>
     <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())} style={styles.leftHeaderView}>
       <Image source = {require('../assets/icons/locationIcon.png')}/>
-        <View style={{marginLeft:5}}>
+        <View style={{marginLeft:wp(3),flexDirection:'row',}}>
+          <View>
         <Text style={styles.headingText}>Dairy 1</Text>
         <Text style={styles.subHeadiingText}>Maharastra India, India</Text>
+        </View>
+        <Image source={require('../assets/icons/downArrow.png')} style={{marginTop:wp(1)}}/>
         </View>
     </TouchableOpacity>
     <TouchableOpacity>
@@ -180,9 +183,10 @@ const HomescreenApiData = () => {
       <View style={{alignItems:'flex-end',marginBottom:hp(8),marginRight:wp(5)}}>
       <SmartDairyButton
                 title={t("Add Party")}
+                
                 buttonStyle={{ height: wp(14), width: wp(40),borderRadius:wp(10),flexDirection:'row' }}
             image = {require('../assets/icons/addUser.png')}
-            textStyle={{marginHorizontal:wp(2)}}
+            textStyle={{marginHorizontal:wp(3),fontSize:17}}
               />
       </View>
       <View style={styles.bottomTabView}> 
@@ -218,10 +222,10 @@ const styles = StyleSheet.create({
     flexDirection:'row',alignItems:'center'
   },
 headingText :{
-  color:COLORS.MainHeaderColor,fontWeight:'600',fontSize:wp(5)
+  color:COLORS.MainHeaderColor,fontWeight:'600',fontSize:18
 },
 subHeadiingText:{
- color: '#002047',opacity:0.7
+ color: '#002047',opacity:0.7,fontSize:14
 },
 boxDataView:{
   borderColor:'#000000',borderWidth:0.5,paddingHorizontal:wp(2),marginHorizontal:wp(4),marginTop:wp(4),borderRadius:wp(4)

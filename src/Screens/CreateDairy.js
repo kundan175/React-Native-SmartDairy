@@ -117,11 +117,14 @@ formData.append('JsonData', JSON.stringify({
       });
   }
 
+  const handleStateChange = () => {
+    setCity()
+  }
   // const onSave = () => {};
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="Create Diary" />
+      <CustomHeader title="Create Dairy" />
       <View style={styles.container}></View>
       <View style={{marginTop:wp(6)}}>
         <TextInputField label={t("Name of Dairy")} placeHolder={t("Dairy Name")}
@@ -129,7 +132,7 @@ formData.append('JsonData', JSON.stringify({
                 value={dairyName}
                 returnKeyType="next"
                 onChangeText={(value) => {
-                  setDiaryName(value.trim());
+                  setDiaryName(value);
                 }}
                 />
         <TextInputField label={t("Mobile No.")} placeHolder={t("Mobile Number")}
@@ -162,15 +165,17 @@ formData.append('JsonData', JSON.stringify({
           <TextInput
           placeholder={t("Type or choose your state")}
           placeholderTextColor={'gray'}
-          style={{width:wp(50)}}
+          style={{width:wp(40),flex:1,height:wp(8)}}
           value={state}
           onChangeText={(value) => {
-            setState(value.trim());
+            setState(value);
           }}
           />
  
-                <Dropdown
-          style={{ marginHorizontal: wp(0) }}
+      
+        </View>
+        <Dropdown
+          style={{ marginHorizontal: wp(0),flex:1}}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
@@ -179,9 +184,9 @@ formData.append('JsonData', JSON.stringify({
           labelField="Code"
           valueField="Code"
           placeholder={""}
-          value={selectedOption}
+          value={state}
           onChange={(data) => {
-            setSelectedOption(data.value);
+            setState(data.value);
           }}
       
 
@@ -195,7 +200,6 @@ formData.append('JsonData', JSON.stringify({
           //   // setIsFocus(false);
           // }}
         />
-        </View>
         <View
           style={{
             alignSelf: "center",
@@ -214,7 +218,7 @@ formData.append('JsonData', JSON.stringify({
           value={city}
           returnKeyType="next"
           onChangeText={(value) => {
-            setCity(value.trim());
+            setCity(value);
           }}
 
         />
@@ -305,14 +309,14 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 16,
-    marginLeft: wp(4),
+    marginLeft: wp(10),
     color: "#002047",
     fontWeight: "600",
   },
   iconStyle: {
     width: 20,
     height: 20,
-    marginRight: wp(2),
+    marginRight: wp(7),
   },
   inputSearchStyle: {
     height: 40,
