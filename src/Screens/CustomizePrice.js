@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -22,6 +22,7 @@ import { alertShowNow } from "../store/counterSlice";
 import CustomDrawerContent from "../Components/CustomDrawer";
 import { DrawerActions } from '@react-navigation/native';
 import TextInputField from "../Components/TextInputField";
+import { Loader } from "../Components/Loader";
 
 
 const CustomizePrice = () => {
@@ -29,6 +30,46 @@ const CustomizePrice = () => {
   const navigation = useNavigation();
   const [value, setValue] = useState();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const [itemData, setItemData] = useState('')
+
+
+  useEffect(() => {
+    getDairy()
+  },[])
+
+const getDairy = () => {
+  const formData = new FormData();
+  formData.append('ClientName', 'SmartDairy');
+  formData.append('sprocname', 'App_GetItems');
+  formData.append('DeviceID', 'QW31023AD4D23-A42B-F233CA9809E1');
+  formData.append('Userid', '6');
+
+  formData.append('JsonData', JSON.stringify({
+    nDairyid:'6',
+    cType:'M'
+    
+}));
+      Api.call(
+        `/api/DataAdd`,
+        "POST",
+        formData,
+        true
+      )
+        .then((res) => {
+          // console.log("response ->", res?.Data);
+          if (res) {
+            setIsLoading(false);
+            setItemData(res?.Data)
+          }
+        })
+        .catch(() => {
+          setIsLoading(false);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
 
 const DATA = [
     {
@@ -90,18 +131,19 @@ const DATA = [
 ]
 
 const renderItem = ({item}) => {
+  console.log('itemmmm-->',item)
   return(
     <View style={styles.itemStyle}>
 
-        <Text style={styles.itemTitle}>{item.title}</Text>
+        <Text style={styles.itemTitle}>{item.cItemnm}</Text>
 <View style={{flexDirection:'row'}}>
-    <Text style={styles.itemSubTitle}>{item.saleText}</Text>
-    <Text style={styles.itemSubTitle}>{item.price}</Text>
+    <Text style={styles.itemSubTitle}>Sale Rate : </Text>
+    <Text style={styles.itemSubTitle}>{item.nSRate}</Text>
 
 </View>
 <View style={{flexDirection:'row'}}>
-    <Text style={styles.itemSubTitle}>{item?.purchaseRate}wfw</Text>
-    <Text style={styles.itemSubTitle}>{item.purchaseRate}wfwe</Text>
+    <Text style={styles.itemSubTitle}>Purchase Rate :</Text>
+    <Text style={styles.itemSubTitle}>{item.nPRate}</Text>
 
 </View>
     
@@ -141,7 +183,7 @@ const renderItem = ({item}) => {
 </View>
 {/* <View style={{marginTop:wp(3)}}> */}
 <FlatList
-data={DATA}
+data={itemData}
 renderItem={renderItem}
 />
 {/* </View> */}
@@ -154,6 +196,7 @@ renderItem={renderItem}
               />
            
       </View>
+      <Loader modalVisible={isLoading} />
 
     </SafeAreaView>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -21,13 +21,52 @@ import { useDispatch } from "react-redux";
 import { alertShowNow } from "../store/counterSlice";
 import CustomDrawerContent from "../Components/CustomDrawer";
 import { DrawerActions } from '@react-navigation/native';
+import { Loader } from "../Components/Loader";
 
 
 const LeftMenu = () => {
   const { t, i18n } = useTranslation();
   const navigation = useNavigation();
-  const [value, setValue] = useState();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const [dairyData, setDairyData] = useState('')
+
+  useEffect(() => {
+    getDairy()
+  },[])
+
+const getDairy = () => {
+  const formData = new FormData();
+  formData.append('ClientName', 'SmartDairy');
+  formData.append('sprocname', 'App_GetDairy');
+  formData.append('DeviceID', 'QW31023AD4D23-A42B-F233CA9809E1');
+  formData.append('Userid', '6');
+
+  formData.append('JsonData', JSON.stringify({
+    nUserid:'6'
+    
+}));
+      Api.call(
+        `/api/DataAdd`,
+        "POST",
+        formData,
+        true
+      )
+        .then((res) => {
+          // console.log("response ->", res?.Data);
+          if (res) {
+            setIsLoading(false);
+            setDairyData(res?.Data)
+          }
+        })
+        .catch(() => {
+          setIsLoading(false);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+
 
 
   const DATA = [
@@ -52,13 +91,14 @@ const LeftMenu = () => {
   ];
 
   const renderItem = ({item}) => {
+    console.log('ITEEMMM', item)
     return(
       <View style={{ paddingVertical:wp(2)
     }}>
         <View style={styles.listView}>
-            <Image source={item?.image}/>
+            <Image source={require('../assets/icons/HomeIcon.png')}/>
             <View style={{marginHorizontal:wp(3)}}>
-      <Text style={styles.listText}>{item?.dairyName}</Text>
+      <Text style={styles.listText}>{item?.cDairyNm}</Text>
       <Text style={styles.listText}>{item?.location}</Text>
       </View>
       </View>
@@ -115,7 +155,7 @@ const LeftMenu = () => {
 </Text>
    <View style={{width:wp(100),height:wp(0.2),backgroundColor:'#000000'}}/>
       <FlatList
-      data={DATA}
+      data={dairyData}
       renderItem={renderItem}
       />
 
@@ -128,6 +168,7 @@ const LeftMenu = () => {
               />
       </View>
   
+      <Loader modalVisible={isLoading} />
 
     </SafeAreaView>
   );
@@ -165,6 +206,6 @@ textinputView:{
     marginHorizontal:wp(3),fontWeight:'600',fontSize:17
   },
   listView:{
-    flexDirection:'row',alignItems:'center',marginHorizontal:wp(5),marginVertical:wp(4)
+    flexDirection:'row',alignItems:'center',marginHorizontal:wp(5),marginVertical:wp(4),backgroundColor:'red'
   }
 });

@@ -33,7 +33,8 @@ const LeftRightDrawer = () => {
   const [isLoading, setIsLoading] = useState(false);
 const [data, setData] = useState('')
 const [purchaseLedgerData, setPurchaseLedgerData] = useState('')
-
+const [currentSummaryData,setCurrentSummaryData] = useState('')
+console.log('sdfsdfsd',currentSummaryData)
   useEffect(() => {
     HomescreenApiData()
   },[])
@@ -42,10 +43,12 @@ const HomescreenApiData = () => {
   const formData = new FormData();
   formData.append('ClientName', 'SmartDairy');
   formData.append('sprocname', 'App_GetDashboard');
-  formData.append('DeviceID', 'qwert1234');
+  formData.append('DeviceID', 'QW31023AD4D23-A42B-F233CA9809E1');
+  formData.append('Userid', '6');
+
   formData.append('JsonData', JSON.stringify({
-    nDairyid: '6',
-    nUserid:'1'
+    nDairyid: '8',
+    nUserid:'6'
     
 }));
       Api.call(
@@ -55,10 +58,11 @@ const HomescreenApiData = () => {
         true
       )
         .then((res) => {
-          console.log("response ->", res?.Data[0]?.PurchaseLedger);
+          // console.log("response ->", res.Data[0].CurrentSummary);
           if (res) {
             setData(res?.Data)
             setPurchaseLedgerData(res?.Data[0]?.PurchaseLedger)
+            setCurrentSummaryData(res?.Data[0]?.CurrentSummary)
             setIsLoading(false);
           }
         })
@@ -116,7 +120,7 @@ const HomescreenApiData = () => {
       {/* <CustomHeader title="Smart Dairy" /> */}
       
 <View style={styles.headerView}>
-    <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())} style={styles.leftHeaderView}>
+    <TouchableOpacity onPress={() => navigation.navigate('LeftMenu')} style={styles.leftHeaderView}>
       <Image source = {require('../assets/icons/locationIcon.png')}/>
         <View style={{marginLeft:wp(3),flexDirection:'row',}}>
           <View>

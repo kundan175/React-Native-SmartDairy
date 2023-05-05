@@ -56,6 +56,8 @@ const formData = new FormData();
 formData.append('ClientName', 'SmartDairy');
 formData.append('sprocname', 'App_AddDairy');
 formData.append('DeviceID', 'qwert1234');
+formData.append('Userid', '6');
+
 formData.append('JsonData', JSON.stringify({
   cDairynm: dairyName,
   cMobile: mobileNo,
@@ -86,11 +88,13 @@ formData.append('JsonData', JSON.stringify({
       });
   }}
 
-const getStateCIty = () => {
+const getStateCIty = () => {  
 const formData = new FormData();
 formData.append('ClientName', 'SmartDairy');
 formData.append('sprocname', 'App_GetStateCity');
-formData.append('DeviceID', 'qwert1234');
+formData.append('Deviceid', 'QW31023AD4D23-A42B-F233CA9809E1');
+formData.append('Userid', '6');
+
 formData.append('JsonData', JSON.stringify({
   nCtgid: '2',
   nParentid:null
@@ -103,10 +107,10 @@ formData.append('JsonData', JSON.stringify({
       true
     )
       .then((res) => {
-        // console.log("response ->", res?.Data[0]?.List);
+        console.log("response ->", res?.Data);
         if (res) {
           setIsLoading(false);
-          setStateCity(res?.Data[0]?.List)
+          setStateCity(res?.Data)
         }
       })
       .catch(() => {
@@ -117,9 +121,9 @@ formData.append('JsonData', JSON.stringify({
       });
   }
 
-  const handleStateChange = () => {
-    setCity()
-  }
+  // const handleStateChange = () => {
+  //   setCity()
+  // }
   // const onSave = () => {};
 
   return (
@@ -162,7 +166,7 @@ formData.append('JsonData', JSON.stringify({
             marginTop: wp(5),
             fontWeight: "600",}}>{t('State')}</Text>
           <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:wp(5),marginLeft:wp(8)}}>
-          <TextInput
+          {/* <TextInput
           placeholder={t("Type or choose your state")}
           placeholderTextColor={'gray'}
           style={{width:wp(40),flex:1,height:wp(8)}}
@@ -170,12 +174,9 @@ formData.append('JsonData', JSON.stringify({
           onChangeText={(value) => {
             setState(value);
           }}
-          />
- 
-      
-        </View>
-        <Dropdown
-          style={{ marginHorizontal: wp(0),flex:1}}
+          /> */}
+       <Dropdown
+          style={{flex:1}}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
@@ -183,7 +184,7 @@ formData.append('JsonData', JSON.stringify({
           data={stateCity}
           labelField="Code"
           valueField="Code"
-          placeholder={""}
+          placeholder={"Type or choose your state"}
           value={state}
           onChange={(data) => {
             setState(data.value);
@@ -200,6 +201,9 @@ formData.append('JsonData', JSON.stringify({
           //   // setIsFocus(false);
           // }}
         />
+      
+        </View>
+  
         <View
           style={{
             alignSelf: "center",
@@ -211,7 +215,7 @@ formData.append('JsonData', JSON.stringify({
           }}
         ></View>
                </View>
-        <TextInputField
+        {/* <TextInputField
           label={t("City")}
           placeHolder={t("Type or choose your city")}
           textInputStyle={styles.textInputPlaceholderStyle}
@@ -221,9 +225,25 @@ formData.append('JsonData', JSON.stringify({
             setCity(value);
           }}
 
-        />
-         {/* <Dropdown
-          style={{ marginHorizontal: wp(0) }}
+        /> */}
+         <View>
+          <Text style={{fontWeight:'600', fontSize: 18,
+            color: "black",
+            marginLeft: wp(7),
+            marginTop: wp(5),
+            fontWeight: "600",}}>{t('City')}</Text>
+          <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:wp(5),marginLeft:wp(8)}}>
+          {/* <TextInput
+          placeholder={t("Type or choose your state")}
+          placeholderTextColor={'gray'}
+          style={{width:wp(40),flex:1,height:wp(8)}}
+          value={state}
+          onChangeText={(value) => {
+            setState(value);
+          }}
+          /> */}
+       <Dropdown
+          style={{flex:1}}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
@@ -231,10 +251,10 @@ formData.append('JsonData', JSON.stringify({
           data={stateCity}
           labelField="Code"
           valueField="Code"
-          // placeholder={"Select"}
-          value={selectedOption}
+          placeholder={"Type or choose your city"}
+          value={city}
           onChange={(data) => {
-            setSelectedOption(data.value);
+            setCity(data.value);
           }}
       
 
@@ -247,7 +267,22 @@ formData.append('JsonData', JSON.stringify({
           //   setValue(item.value);
           //   // setIsFocus(false);
           // }}
-        /> */}
+        />
+      
+        </View>
+  
+        <View
+          style={{
+            alignSelf: "center",
+            height: hp(0.1),
+            width: wp(86),
+            paddingHorizontal: 15,
+            color: "gray",
+            backgroundColor: "gray",
+          }}
+        ></View>
+               </View>
+
         <View
           style={{
             flex: 1,
@@ -302,21 +337,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   placeholderStyle: {
-    fontSize: 16,
-    marginLeft: wp(4),
+    fontSize: 14,
+    marginLeft: wp(1),
     fontWeight: "600",
-    color: "#002047",
+    color: "gray",
   },
   selectedTextStyle: {
-    fontSize: 16,
-    marginLeft: wp(10),
+    fontSize: 14,
+    marginLeft: wp(1),
     color: "#002047",
-    fontWeight: "600",
+    fontWeight: "500",
   },
   iconStyle: {
     width: 20,
     height: 20,
-    marginRight: wp(7),
+    marginRight: wp(3),
   },
   inputSearchStyle: {
     height: 40,
