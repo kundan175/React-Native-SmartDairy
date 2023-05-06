@@ -100,7 +100,7 @@ const HomescreenApiData = () => {
             <Text style={{marginVertical:wp(4),marginHorizontal:wp(3),fontWeight:'600'}}>{item?.cPartynm}</Text>
         {/* </View> */}
 <View style={{flexDirection:'row'}}>
-<Text style={{marginVertical:wp(4),marginHorizontal:wp(1),fontWeight:'600'}}>Amount :-</Text>
+<Text style={{marginVertical:wp(4),marginHorizontal:wp(1),fontWeight:'600'}}>{t('Amount :-')}</Text>
 
       <Text style={{marginVertical:wp(4),marginHorizontal:wp(2),fontWeight:'400'}}>{item?.Amt}.0</Text>
       {/* <Text style={{marginVertical:wp(4),marginHorizontal:wp(3)}}></Text> */}
@@ -130,7 +130,7 @@ const HomescreenApiData = () => {
         <Image source={require('../assets/icons/downArrow.png')} style={{marginTop:wp(1)}}/>
         </View>
     </TouchableOpacity>
-    <TouchableOpacity>
+    <TouchableOpacity  onPress={() => navigation.navigate('RightMenu')}>
     <Image source = {require('../assets/icons/userProfile.png')}/>
     </TouchableOpacity>
 </View>
@@ -163,7 +163,7 @@ const HomescreenApiData = () => {
 </View>
 </View>
 <View style={styles.adminView}>
-  <Text>Admin report</Text>
+  <Text>{t('Admin report')}</Text>
 </View>
    <View style={styles.textinput}>
     <View style={{flexDirection:'row'}}>

@@ -114,9 +114,9 @@ const getDairy = () => {
   return (
     <SafeAreaView style={{ flex: 1,backgroundColor:'white' }}>
       {/* <CustomHeader title="Smart Dairy" /> */}
-      <View style={{alignItems:'flex-end',paddingHorizontal:wp(4),marginBottom:wp(2)}}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={{alignItems:'flex-end',paddingHorizontal:wp(4),marginBottom:wp(2)}}>
         <Image source={require('../assets/icons/grayCross.png')}/>
-      </View>
+      </TouchableOpacity>
 <View style={styles.headerView}>
       
         <Text style={styles.headingText}>Dairy 1</Text>
@@ -128,19 +128,19 @@ const getDairy = () => {
 <View style={styles.bottomTabView}> 
       <TouchableOpacity  style={styles.bottomView}>
       <Image source = {require('../assets/icons/Edit.png')}/>
-      <Text style={styles.bottomText}>Edit</Text>
+      <Text style={styles.bottomText}>{t('Edit')}</Text>
       </TouchableOpacity>
       <TouchableOpacity  style={styles.bottomView}>
       <Image source = {require('../assets/icons/userParties.png')}/>
-      <Text style={styles.bottomText}>Parties</Text>
+      <Text style={styles.bottomText}>{t('Parties')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.bottomView}>
       <Image source = {require('../assets/icons/items.png')}/>
-      <Text style={styles.bottomText}>Items</Text>
+      <Text style={styles.bottomText}>{t('Items')}</Text>
       </TouchableOpacity>
       <TouchableOpacity  style={styles.bottomView}>
       <Image source = {require('../assets/icons/report.png')}/>
-      <Text style={styles.bottomText}>Reports</Text>
+      <Text style={styles.bottomText}>{t('Reports')}</Text>
       </TouchableOpacity>
       </View>
 
@@ -151,7 +151,7 @@ const getDairy = () => {
     <Image source={require('../assets/icons/searchIcon.png')}/>
 </View>
 <Text style={{paddingHorizontal:wp(5),marginTop:wp(5),marginBottom:wp(3),fontSize:17}}>
-    Select Dairy
+    {t('Select Dairy')}
 </Text>
    <View style={{width:wp(100),height:wp(0.2),backgroundColor:'#000000'}}/>
       <FlatList
@@ -206,6 +206,6 @@ textinputView:{
     marginHorizontal:wp(3),fontWeight:'600',fontSize:17
   },
   listView:{
-    flexDirection:'row',alignItems:'center',marginHorizontal:wp(5),marginVertical:wp(4),backgroundColor:'red'
+    flexDirection:'row',alignItems:'center',marginHorizontal:wp(5),marginVertical:wp(4),
   }
 });

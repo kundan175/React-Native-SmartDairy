@@ -76,9 +76,9 @@ const RightMenu = () => {
   return (
     <SafeAreaView style={{ flex: 1,backgroundColor:'white' }}>
       {/* <CustomHeader title="Smart Dairy" /> */}
-      <View style={{alignItems:'flex-end',paddingHorizontal:wp(4),marginBottom:wp(4)}}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={{alignItems:'flex-end',paddingHorizontal:wp(4),marginBottom:wp(4)}}>
         <Image source={require('../assets/icons/grayCross.png')}/>
-      </View>
+      </TouchableOpacity>
 <View style={styles.headerView}>
       <Image source = {require('../assets/icons/userProfile.png')} style={{height:wp(15),width:wp(15)}}/>
         <Text style={styles.headingText}>User Name</Text>
@@ -88,80 +88,80 @@ const RightMenu = () => {
 
  
 <View style={{marginTop:wp(10)}}>
-<View style={{ paddingVertical:wp(2)}}>
+<TouchableOpacity style={{ paddingVertical:wp(2)}}>
         <View style={{backgroundColor:'#F5F5F5'}}>
         <View style={styles.listView}>
         <View style={{flexDirection:'row',alignItems:'center'}}>
         <Image source={require('../assets/icons/languageChange.png')}/>
         <View style={{marginHorizontal:wp(3)}}>
-      <Text style={styles.listText}>Change Language</Text>
+      <Text style={styles.listText}>{t('Change Language')}</Text>
       </View>
       </View>
       <Image source={require('../assets/icons/downArrow.png')}/>
       </View>
       </View>
-      </View>
+      </TouchableOpacity>
 
-      <View style={{ paddingVertical:wp(2)}}>
+      <TouchableOpacity style={{ paddingVertical:wp(2)}}>
         <View style={{backgroundColor:'#F5F5F5'}}>
         <View style={styles.listView}>
         <View style={{flexDirection:'row',alignItems:'center'}}>
         <Image source={require('../assets/icons/addUserdark.png')}/>
         <View style={{marginHorizontal:wp(3)}}>
-      <Text style={styles.listText}>Manage staff</Text>
+      <Text style={styles.listText}>{t('Manage staff')}</Text>
       </View>
       </View>
       <Image source={require('../assets/icons/rightArrow.png')}/>
       </View>
       </View>
-      </View>
+      </TouchableOpacity>
 
-      <View style={{ paddingVertical:wp(2)}}>
+      <TouchableOpacity style={{ paddingVertical:wp(2)}}>
         <View style={{backgroundColor:'#F5F5F5'}}>
         <View style={styles.listView}>
         <View style={{flexDirection:'row',alignItems:'center'}}>
         <Image source={require('../assets/icons/Notification.png')}/>
         <View style={{marginHorizontal:wp(3)}}>
-      <Text style={styles.listText}>Notifications</Text>
+      <Text style={styles.listText}>{t('Notifications')}</Text>
       </View>
       </View>
       <Image source={require('../assets/icons/downArrow.png')}/>
       </View>
       </View>
-      </View>
+      </TouchableOpacity>
 
-      <View style={{ paddingVertical:wp(2)}}>
+      <TouchableOpacity style={{ paddingVertical:wp(2)}}>
         <View style={{backgroundColor:'#F5F5F5'}}>
         <View style={styles.listView}>
         <View style={{flexDirection:'row',alignItems:'center'}}>
         <Image source={require('../assets/icons/subscription.png')}/>
          <View style={{marginHorizontal:wp(3)}}>
-      <Text style={styles.listText}>Subscription</Text>
+      <Text style={styles.listText}>{t('Subscription')}</Text>
       </View>
       </View>
       <Image source={require('../assets/icons/rightArrow.png')}/>
       </View>
       </View>
-      </View>
+      </TouchableOpacity>
 
-      <View style={{ paddingVertical:wp(2)}}>
+      <TouchableOpacity style={{ paddingVertical:wp(2)}}>
         <View style={{backgroundColor:'#F5F5F5'}}>
         <View style={styles.listView}>
         <View style={{flexDirection:'row',alignItems:'center'}}>
         <Image source={require('../assets/icons/chatandSupport.png')}/>
         <View style={{marginHorizontal:wp(3)}}>
-      <Text style={styles.listText}>Chat & Support</Text>
+      <Text style={styles.listText}>{t('Chat & Support')}</Text>
       </View>
       </View>
       <Image source={require('../assets/icons/rightArrow.png')}/>
       </View>
       </View>
-      </View>
+      </TouchableOpacity>
 </View>
 
       <TouchableOpacity style={{flex:1,justifyContent:'flex-end'}}>
         <View style={{backgroundColor:'#F5F5F5', alignItems:'center',paddingVertical:wp(3),marginBottom:wp(5)}}>
-      <Text style={{color:'red',fontSize:18,textAlign:'center'}}>Delete Account</Text>
+      <Text style={{color:'red',fontSize:18,textAlign:'center'}}>{t('Delete Account')}</Text>
       </View>
       </TouchableOpacity>
 

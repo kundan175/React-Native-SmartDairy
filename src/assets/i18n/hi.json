@@ -26,6 +26,21 @@
     "Receipt":"रसीद",
     "payment":"भुगतान",
     "Sale":"बिक्री",
-    "Purchase":"खरीदना"
+    "Purchase":"खरीदना",
+    "Amount":"मात्रा",
+    "Add Party":"पार्टी जोड़ें",
+    "Admin report":"व्यवस्थापक रिपोर्ट",
+    "Change Language":"भाषा बदलें",
+    "Manage staff":"कर्मचारियों का प्रबंधन करें",
+    "Notifications":"सूचनाएं",
+    "Subscription":"अंशदान",
+    "Chat & Support":"चैट और समर्थन",
+    "Delete Account":"खाता हटा दो",
+    "Add Dairy":"डेयरी जोड़ें",
+    "Select Dairy":"डेयरी का चयन करें",
+    "Edit":"संपादन करना",
+    "Parties":"दलों",
+    "Items":"सामान",
+    "Reports":"रिपोर्टों"
   }
 }
